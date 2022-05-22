@@ -6,11 +6,12 @@ import SketchComponent from '../components/sketch'
 import Layout from '../components/layout'
 import Link from 'next/link'
 import { useState } from 'react'
+import utilStyles from '../styles/utils.module.css'
 
 
 
 const Home: NextPage = () => {
-  const [coefficient, setCoefficient] = useState([1, 0, -1 / 9, 0, 1 / 25, 0, -1 / 49])
+  const [coefficient, setCoefficient] = useState(Array(10).fill(0))
   const [theta, setTheta] = useState(0)
 
   return (
@@ -19,38 +20,28 @@ const Home: NextPage = () => {
         <div>
           <SketchComponent coefficient={coefficient} theta={theta} />
         </div>
+        <div >
+          <ul>
+            {
+              coefficient.map((num,id) => (
+                <li key={id}>
+                  {"co" + id}
+                  <input type="range" min="-1" max="1" step="0.01" id={"co"+id} onChange={() => {
+                    let htmlEle = document.getElementById("co" + id) as HTMLInputElement
+                    let value: number = htmlEle.valueAsNumber
+                    setCoefficient(coefficient.map((ele,index) => (index == id ? value : ele)))
+                  }}></input>
+                  {"value:" + num}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
         <div>
+          <button onClick={() => setTheta(theta + 1)}>next time {theta}</button>
+        </div>
+        <div className={utilStyles.headingMd}>
           <Link href='/test'>Go test</Link>
-        </div>
-        <div>
-          <button onClick={() => setTheta(theta + 1)}>next time</button>
-          <p>{theta}</p>
-        </div>
-        <div>
-          <ol>
-            <li>
-              <input type="range" id="co1" onChange={() => {
-                let htmlEle = document.getElementById("co1") as HTMLInputElement
-                let value: number = htmlEle.valueAsNumber
-                setCoefficient(coefficient.map((ele, index) => (index === 0 ? value / 50 : ele)))
-              }}></input>
-            </li>
-            <li>
-            <input type="range" id="co2" onChange={() => {
-                let htmlEle = document.getElementById("co2") as HTMLInputElement
-                let value: number = htmlEle.valueAsNumber
-                setCoefficient(coefficient.map((ele, index) => (index === 1 ? value / 50 : ele)))
-              }}></input>
-            </li>
-            <li>
-            <input type="range" id="co3" onChange={() => {
-                let htmlEle = document.getElementById("co3") as HTMLInputElement
-                let value: number = htmlEle.valueAsNumber
-                setCoefficient(coefficient.map((ele, index) => (index === 2 ? value / 50 : ele)))
-              }}></input>
-            </li>
-          </ol>
-
         </div>
       </section>
     </Layout>
