@@ -30,19 +30,22 @@ const Home: NextPage = () => {
           <ol>
             <li>
               <input type="range" id="co1" onChange={() => {
-                let value = document.getElementById("co1")!.value!
+                let htmlEle = document.getElementById("co1") as HTMLInputElement
+                let value: number = htmlEle.valueAsNumber
                 setCoefficient(coefficient.map((ele, index) => (index === 0 ? value / 50 : ele)))
               }}></input>
             </li>
             <li>
             <input type="range" id="co2" onChange={() => {
-                let value = document.getElementById("co2")!.value!
+                let htmlEle = document.getElementById("co2") as HTMLInputElement
+                let value: number = htmlEle.valueAsNumber
                 setCoefficient(coefficient.map((ele, index) => (index === 1 ? value / 50 : ele)))
               }}></input>
             </li>
             <li>
             <input type="range" id="co3" onChange={() => {
-                let value = document.getElementById("co3")!.value!
+                let htmlEle = document.getElementById("co3") as HTMLInputElement
+                let value: number = htmlEle.valueAsNumber
                 setCoefficient(coefficient.map((ele, index) => (index === 2 ? value / 50 : ele)))
               }}></input>
             </li>
