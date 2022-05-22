@@ -3,6 +3,7 @@ import p5Types from 'p5'
 import styles from './layout.module.css'
 import { Point, renderPoints } from '../lib/point'
 import {useRouter} from 'next/router'
+import getWavePoints from '../lib/wave'
 
 const Sketch = dynamic(import('react-p5'), {
     loading: () => <></>,
@@ -11,9 +12,7 @@ const Sketch = dynamic(import('react-p5'), {
 
 
 
-const SketchComponent = () => {
-    let time = 0;
-    const router = useRouter()
+const SketchComponent = ({coefficient,theta}:{coefficient:number[],theta:number}) => {
     const preload = (p5: p5Types) => {
         //load image
     }
@@ -23,17 +22,18 @@ const SketchComponent = () => {
         //todo setup
     }
 
-    //router.events.on('routeChangeStart',setup)
     const draw = (p5: p5Types) => {
         // draw
         p5.background(220)
-        let points: Point[] = []
-        const r = 200
-        for (let i = 0; i < 500; i++) {
-            points.push(new Point(i, r * Math.sin(i / 5 + time/10) + r + 10));
-        }
-        time+=1
+        let r = 100
+    //    let coefficient:number[] = [1,0,-1/9,0,1/25,0,-1/49]
+        let xPerPixel = 0.05
+        let width = p5.windowWidth / 2
+        let height = p5.windowHeight / 2
+      //  let theta = time/10
+        let points: Point[] = getWavePoints({r,coefficient,xPerPixel,width,height,theta})
         renderPoints(p5, points)
+      //  console.log("render wave")
     }
 
     const windowResized = (p5: p5Types) => {

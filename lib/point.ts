@@ -1,12 +1,9 @@
 import p5Types from 'p5'
 
-export class Point {
-    x: number
-    y: number
-    constructor(x: number, y: number) {
-        this.x = x
-        this.y = y
-    }
+
+export type Point = {
+    x: number,
+    y: number,
 }
 
 export function renderPoints(p5: p5Types, points: Point[]) {
