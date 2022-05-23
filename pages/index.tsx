@@ -41,7 +41,7 @@ const Home: NextPage = () => {
           <button onClick={() => setTheta(theta + 1)}>next time {theta}</button>
         </div>
         <div className={utilStyles.headingMd}>
-          <Link href='/test'>Go test</Link>
+          <Link href='/page2'>Go page2</Link>
         </div>
       </section>
     </Layout>

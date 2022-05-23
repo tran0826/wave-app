@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 
-export default function test(){
+export default function page2(){
     return (
         <div>
-            <p>TEST</p>
+            <p>page2</p>
             <Link href='.'>root</Link>
         </div>
     )
