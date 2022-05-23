@@ -1,11 +1,13 @@
 import Link from "next/link";
+import Layout from "../components/layout";
 
 
-export default function page2(){
+export default function page2() {
     return (
-        <div>
-            <p>page2</p>
-            <Link href='.'>root</Link>
-        </div>
+        <Layout>
+            <div>
+                <p>page2</p>
+            </div>
+        </Layout>
     )
 }

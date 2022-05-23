@@ -5,7 +5,7 @@ import Home from '../../pages/index'
 describe('Home', () => {
   it('Should render name', () => {
     const container = render(<Home />)
-    expect(screen.getByText('Suzuki Kaito')).toBeInTheDocument()
+    expect(screen.getByText('tran0826')).toBeInTheDocument()
 
     expect(container).toMatchSnapshot()
   })
