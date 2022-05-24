@@ -8,6 +8,7 @@
 # testing
 /coverage
 *.snap
+/__test__/pages/*
 
 # next.js
 /.next/
