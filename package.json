@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "prebuild": "npm run test -- -u",
+    "postbuild": "npm run test -- -u",
     "start": "next start",
     "lint": "next lint",
     "test": "jest --env=jsdom --verbose",
