@@ -1,5 +1,5 @@
 import { Point } from "../../lib/point"
-import getWavePoints from "../../lib/wave"
+import {getWavePoints} from "../../lib/wave"
 
 describe('wave test', () => {
     it('wave return number of Point equal width ',() => {
