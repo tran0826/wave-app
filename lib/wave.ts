@@ -1,6 +1,6 @@
 import { Point } from "./point"
 
-const getWavePoints = (
+export const getWavePoints = (
     {r,coefficient,xPerPixel,width,height,theta = 0}:
     {r:number,coefficient:number[],xPerPixel:number,width:number,height:number,theta?:number}) : Point[] => {
     let points:Point[] = []
@@ -14,5 +14,8 @@ const getWavePoints = (
     return points
 }
 
-
-export default getWavePoints
+export const getWaveCoefficient = (number: number) => {
+    //todo calclate random coefficient
+    let coefficient:number[] = Array(number).fill(0.1)
+    return coefficient
+}
