@@ -12,9 +12,11 @@ SSR is used for Title.
 
 
 type Props = {
-  ranking?: number[]
-  id?: number
-  time?: number
+  data?: {
+    ranking: number[]
+    id: number
+    time: number
+  }
   err?: string
 }
 
@@ -23,51 +25,49 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   try {
     const id = Number(context.query.id as string)
     const time = Number(context.query.time as string)
-    if(Number.isNaN(time))throw new Error("error")
+    if (Number.isNaN(time)) throw new Error("Result Time is invalid")
     //API call
     const ranking = await Array(5).fill(100)
-    const props: Props = { ranking, id, time }
     return {
-      props
+      props:{data:{ ranking, id, time } }
     }
-  } catch {
-    return {
-      props: { err: "error" }
+  } catch (err) {
+    if (err instanceof Error) {
+      return {
+        props: { err: err.message }
+      }
     }
+    throw err
   }
-
 }
 
-const Result: NextPage<Props> = (props) => {
-  console.log(props.time)
-  if (props.err) {
+const Result: NextPage<Props> = ({data,err}: Props) => {
+  if (err || !data) {
     return <DefaultErrorPage statusCode={404} />
   }
-  else {
+  else{
     return (
       <>
         <Head>
-          <title>result {props.id}</title>
+          <title>result {data.id}</title>
         </Head>
         <Layout>
-          <h1>RESULT STAGE {props.id}</h1>
+          <h1>RESULT STAGE {data.id}</h1>
           <div>
-            <p>Your time is {props.time}!</p>
+            <p>Your time is {data.time}!</p>
           </div>
           <div >
             <p>ranking</p>
             <ul>
-              {props.ranking.map((ele, index) => (
+              {data.ranking.map((ele, index) => (
                 <li key={index}>
                   <p>{ele}</p>
                 </li>
               ))}
             </ul>
           </div>
-
         </Layout>
       </>
-
     )
   }
 }
