@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage ,GetStaticProps} from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -8,16 +8,29 @@ import Link from 'next/link'
 import { useState } from 'react'
 import utilStyles from '../styles/utils.module.css'
 
-//call API to get stage
-const stages: number[] = [1, 2, 3, 4, 5]
+type Props = {
+  stages:number[]
+}
 
-const Home: NextPage = () => {
-  const [coefficient, setCoefficient] = useState(Array(10).fill(0))
-  const [theta, setTheta] = useState(0)
+export const getStaticProps:GetStaticProps<Props> = async () => {
+  const stages = [1, 2, 3, 4, 5, 6]
+  return {
+    props:{
+      stages
+    }
+  }
+}
+//call API to get stage
+
+const Home: NextPage<Props> = ({stages}) => {
 
   return (
     <Layout home>
+      <Head>
+      <title>wave composite game</title>
+      </Head>
       <section>
+        <h1>Wave Composite Game</h1>
         <div>
           <ul className={utilStyles.headingMd}>
             {

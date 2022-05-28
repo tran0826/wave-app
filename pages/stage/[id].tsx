@@ -1,9 +1,17 @@
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult, GetStaticPaths, NextPage } from "next"
 import Head from "next/head"
+import Link from "next/link"
 import { useState } from "react"
 import Layout from "../../components/layout"
 import SketchComponent from "../../components/sketch"
 import { getWaveCoefficient } from "../../lib/wave"
+
+
+/*todo
+Change SSG and Coefficient is need one more set in useState.
+getStaticPaths is needed.
+SSR is used for Title.
+*/
 
 
 type Props = {
@@ -25,6 +33,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
 const Stage: NextPage<Props> = (props) => {
     const [coefficient, setCoefficient] = useState(Array(props.id).fill(0))
     const [theta, setTheta] = useState(0)
+    const [time,setTime] = useState({time:0})
 
     return (
         <>
@@ -56,6 +65,14 @@ const Stage: NextPage<Props> = (props) => {
 
                 <div>
                     <button onClick={() => setTheta(theta + 1)}>next time {theta}</button>
+                </div>
+                <div>
+                    <Link
+                    as={`/result/${props.id}`}
+                    href={{pathname: `/result/${props.id}`, query:time}}
+                    >
+                        <a>OK!</a>
+                    </Link>
                 </div>
             </Layout>
         </>
