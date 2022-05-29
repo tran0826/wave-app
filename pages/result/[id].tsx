@@ -13,9 +13,13 @@ SSR is used for Title.
 
 type Props = {
   data?: {
-    ranking: number[]
+    ranking: {
+      name: string
+      time: number
+    }[]
     id: number
     time: number
+    userName: string
   }
   err?: string
 }
@@ -26,10 +30,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
     const id = Number(context.query.id as string)
     const time = Number(context.query.time as string)
     if (Number.isNaN(time)) throw new Error("Result Time is invalid")
+    const userName = context.query.userName
+    if (typeof userName !== "string") throw new Error("userName is invalid")
     //API call
-    const ranking = await Array(5).fill(100)
+    const ranking = await Array(5).fill({ name: "aaa", time: "10" })
     return {
-      props:{data:{ ranking, id, time } }
+      props: { data: { ranking, id, time, userName } }
     }
   } catch (err) {
     if (err instanceof Error) {
@@ -41,33 +47,31 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   }
 }
 
-const Result: NextPage<Props> = ({data,err}: Props) => {
+const Result: NextPage<Props> = ({ data, err }: Props) => {
   if (err || !data) {
     return <DefaultErrorPage statusCode={404} />
   }
-  else{
+  else {
     return (
-      <>
+      <Layout>
         <Head>
           <title>result {data.id}</title>
         </Head>
-        <Layout>
-          <h1>RESULT STAGE {data.id}</h1>
-          <div>
-            <p>Your time is {data.time}!</p>
-          </div>
-          <div >
-            <p>ranking</p>
-            <ul>
-              {data.ranking.map((ele, index) => (
-                <li key={index}>
-                  <p>{ele}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Layout>
-      </>
+        <h1>RESULT STAGE {data.id}</h1>
+        <div>
+          <p>{data.userName + "'s"} time is {data.time}!</p>
+        </div>
+        <div >
+          <p>ranking</p>
+          <ol>
+            {data.ranking.map((ele, index) => (
+              <li key={index}>
+                <p>{ele.name}:{ele.time}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Layout>
     )
   }
 }

@@ -13,6 +13,7 @@ type Props = {
 }
 
 export const getStaticProps:GetStaticProps<Props> = async () => {
+  //call api
   const stages = [1, 2, 3, 4, 5, 6]
   return {
     props:{
@@ -20,7 +21,6 @@ export const getStaticProps:GetStaticProps<Props> = async () => {
     }
   }
 }
-//call API to get stage
 
 const Home: NextPage<Props> = ({stages}) => {
 
