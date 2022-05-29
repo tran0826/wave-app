@@ -16,6 +16,10 @@ export const getWavePoints = (
 
 export const getWaveCoefficient = (number: number) => {
     //todo calclate random coefficient
-    let coefficient:number[] = Array(number).fill(0.1)
+    let coefficient:number[] = Array(number)
+    for(let i = 0; i < number; i++){
+        coefficient[i] = Math.random()
+    }
+   // console.log(coefficient)
     return coefficient
 }

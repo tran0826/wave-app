@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import Layout from "../../components/layout"
 import SketchComponent from "../../components/sketch"
 import { getWaveCoefficient } from "../../lib/wave"
-import DefaultErrorPage from 'next/error'
 
 
 /*todo
@@ -16,6 +15,7 @@ getStaticPaths is needed.
 
 type Props = {
     id: number
+    answerCoefficient: number[]
 }
 
 
@@ -23,10 +23,10 @@ type Props = {
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     if (params) {
         const id = Number(params.id as string)
-        const props: Props = { id }
+        const answerCoefficient = getWaveCoefficient(id)
         return {
             props:{
-                id
+                id,answerCoefficient
             }
         }
     }else{
@@ -42,8 +42,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const Stage: NextPage<Props> = (props) => {
-    const [answerCoefficient] = useState(getWaveCoefficient(props.id))
-    const [userCoefficient, setUserCoefficient] = useState(Array(props.id).fill(0))
+//    const [answerCoefficient] = useState(getWaveCoefficient(props.id))
+    const [userCoefficient, setUserCoefficient] = useState(Array(props.id).fill(0) as number[])
     const [theta, setTheta] = useState(0)
     const [startFlag, setStartFlag] = useState(false)
     const [startTime, setStartTime] = useState(0)
@@ -84,7 +84,7 @@ const Stage: NextPage<Props> = (props) => {
 
             {startFlag ?
                 <div>
-                    <SketchComponent coefficient={[answerCoefficient, userCoefficient]} theta={theta} />
+                    <SketchComponent coefficient={[props.answerCoefficient, userCoefficient]} theta={theta} />
                     <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
                     <div>
