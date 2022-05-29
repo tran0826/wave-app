@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
 import Layout from "../../components/layout"
 import SketchComponent from "../../components/sketch"
-import { getWaveCoefficient } from "../../lib/wave"
+import { calcWaveSimilarity, getWaveCoefficient } from "../../lib/wave"
 
 
 
@@ -18,11 +18,11 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     if (params) {
         const id = Number(params.id as string)
         return {
-            props:{
+            props: {
                 id
             }
         }
-    }else{
+    } else {
         throw new Error("no id")
     }
 }
@@ -35,8 +35,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const Stage: NextPage<Props> = (props) => {
-    const [answerCoefficient,setAnswerCoefficient] = useState(Array(props.id).fill(0) as number[])
+    const [answerCoefficient, setAnswerCoefficient] = useState(Array(props.id).fill(0) as number[])
     const [userCoefficient, setUserCoefficient] = useState(Array(props.id).fill(0) as number[])
+    const [waveSimilarity, setWaveSimilarity] = useState(0)
     const [theta, setTheta] = useState(0)
     const [startFlag, setStartFlag] = useState(false)
     const [startTime, setStartTime] = useState(0)
@@ -51,7 +52,7 @@ const Stage: NextPage<Props> = (props) => {
             setNowTime(Date.now())
         }, 100)
         return () => clearInterval(interval)
-    }, [])
+    }, [props.id])
 
     const intervalRef = useRef<NodeJS.Timer | null>(null)
     const moveWave = useCallback(() => {
@@ -81,6 +82,7 @@ const Stage: NextPage<Props> = (props) => {
             {startFlag ?
                 <div>
                     <SketchComponent coefficient={[answerCoefficient, userCoefficient]} theta={theta} />
+                    <p>similarity: {waveSimilarity}</p>
                     <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
                     <div>
@@ -97,6 +99,7 @@ const Stage: NextPage<Props> = (props) => {
                                             let htmlEle = document.getElementById("co" + id) as HTMLInputElement
                                             let value: number = htmlEle.valueAsNumber
                                             setUserCoefficient(userCoefficient.map((ele, index) => (index == id ? value : ele)))
+                                            setWaveSimilarity(calcWaveSimilarity(userCoefficient, answerCoefficient))
                                         }}></input>
                                         {"value:" + num}
                                     </li>
@@ -104,22 +107,28 @@ const Stage: NextPage<Props> = (props) => {
                             }
                         </ul>
                     </div>
-
-                    <div>
-                        <Link
-                            as={`/result/${props.id}`}
-                            href={
-                                {
-                                    pathname: `/result/${props.id}`,
-                                    query: {
-                                        time: Math.round((nowTime - startTime) / 100) / 10,
-                                        userName: userName
-                                    }
-                                }}
-                        >
-                            <a>CLEAR!</a>
-                        </Link>
-                    </div>
+                    {
+                        waveSimilarity < 10 ?
+                            <div>
+                                <Link
+                                    as={`/result/${props.id}`}
+                                    href={
+                                        {
+                                            pathname: `/result/${props.id}`,
+                                            query: {
+                                                time: Math.round((nowTime - startTime) / 100) / 10,
+                                                userName: userName
+                                            }
+                                        }}
+                                >
+                                    <a>CLEAR!</a>
+                                </Link>
+                            </div>
+                            :
+                            <div>
+                                <p>Wrong answer </p>
+                            </div>
+                    }
                 </div>
                 :
                 <div>
@@ -129,6 +138,7 @@ const Stage: NextPage<Props> = (props) => {
                         setStartFlag(true)
                         setNowTime(Date.now())
                         setStartTime(Date.now())
+                        setWaveSimilarity(calcWaveSimilarity(userCoefficient, answerCoefficient))
                         let htmlEle = document.getElementById("userNameBox") as HTMLInputElement
                         let value: string = htmlEle.value
                         if (value !== "") setUserName(value)

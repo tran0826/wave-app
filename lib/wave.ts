@@ -18,8 +18,26 @@ export const getWaveCoefficient = (number: number) => {
     //todo calclate random coefficient
     let coefficient:number[] = Array(number)
     for(let i = 0; i < number; i++){
-        coefficient[i] = Math.random()
+        coefficient[i] = Math.round(Math.random() * 100)/100
     }
     console.log(coefficient)
     return coefficient
+}
+
+export const calcWaveSimilarity = (coefficient1:number[],coefficient2:number[]) => {
+ //   assert(coefficient1.length === coefficient2.length)
+    let acc = 0
+    for(let i = 0;i<125;i++){
+        const x = i / 20
+        let a = coefficient1.reduce(
+            (acc,ele,i) => {
+                return acc + ele * Math.sin((i + 1) * x)
+            },0)
+        let b = coefficient2.reduce(
+            (acc,ele,i) => {
+                return acc + ele * Math.sin((i + 1) * x)
+            },0)
+        acc += Math.abs(a - b)
+    }
+    return acc
 }
