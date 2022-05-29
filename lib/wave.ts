@@ -20,6 +20,6 @@ export const getWaveCoefficient = (number: number) => {
     for(let i = 0; i < number; i++){
         coefficient[i] = Math.random()
     }
-   // console.log(coefficient)
+    console.log(coefficient)
     return coefficient
 }

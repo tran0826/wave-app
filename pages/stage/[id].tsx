@@ -7,15 +7,9 @@ import SketchComponent from "../../components/sketch"
 import { getWaveCoefficient } from "../../lib/wave"
 
 
-/*todo
-Change SSG 
-getStaticPaths is needed.
-*/
-
 
 type Props = {
     id: number
-    answerCoefficient: number[]
 }
 
 
@@ -23,10 +17,9 @@ type Props = {
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     if (params) {
         const id = Number(params.id as string)
-        const answerCoefficient = getWaveCoefficient(id)
         return {
             props:{
-                id,answerCoefficient
+                id
             }
         }
     }else{
@@ -42,7 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 const Stage: NextPage<Props> = (props) => {
-//    const [answerCoefficient] = useState(getWaveCoefficient(props.id))
+    const [answerCoefficient,setAnswerCoefficient] = useState(Array(props.id).fill(0) as number[])
     const [userCoefficient, setUserCoefficient] = useState(Array(props.id).fill(0) as number[])
     const [theta, setTheta] = useState(0)
     const [startFlag, setStartFlag] = useState(false)
@@ -50,12 +43,15 @@ const Stage: NextPage<Props> = (props) => {
     const [nowTime, setNowTime] = useState(0)
     const [userName, setUserName] = useState("nanashi")
 
+    //when game start
     useEffect(() => {
+        console.log("useEffect")
+        setAnswerCoefficient(getWaveCoefficient(props.id))
         const interval = setInterval(() => {
             setNowTime(Date.now())
         }, 100)
         return () => clearInterval(interval)
-    }, [startFlag])
+    }, [])
 
     const intervalRef = useRef<NodeJS.Timer | null>(null)
     const moveWave = useCallback(() => {
@@ -84,7 +80,7 @@ const Stage: NextPage<Props> = (props) => {
 
             {startFlag ?
                 <div>
-                    <SketchComponent coefficient={[props.answerCoefficient, userCoefficient]} theta={theta} />
+                    <SketchComponent coefficient={[answerCoefficient, userCoefficient]} theta={theta} />
                     <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
                     <div>
