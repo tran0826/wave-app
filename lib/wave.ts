@@ -26,7 +26,6 @@ export const getWaveCoefficient = (number: number) => {
 }
 
 export const calcWaveSimilarity = (coefficient1: number[], coefficient2: number[]) => {
-    //   assert(coefficient1.length === coefficient2.length)
     let acc = 0
     for (let i = 0; i < 125; i++) {
         const x = i / 20

@@ -2,6 +2,7 @@ import { GetServerSideProps, NextPage } from "next"
 import Head from "next/head"
 import Layout from "../../components/layout"
 import DefaultErrorPage from 'next/error'
+import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from "react-share"
 
 
 /*todo
@@ -55,11 +56,19 @@ const Result: NextPage<Props> = ({ data, err }: Props) => {
     return (
       <Layout>
         <Head>
-          <title>result {data.id}</title>
+          <title>result stage {data.id}</title>
         </Head>
         <h1>RESULT STAGE {data.id}</h1>
         <div>
-          <p>{data.userName + "'s"} time is {data.time}!</p>
+          <p>{data.userName + "'s"} time is {data.time} sec!</p>
+        </div>
+        <div>
+          <TwitterShareButton url="https://wave-app-nine.vercel.app/" title={data.userName + "'s time is " + data.time + " sec on stage " + data.id + "! #wave_composite_game" }>
+            <TwitterIcon size={30} round={false} />
+          </TwitterShareButton>
+          <LineShareButton url="https://wave-app-nine.vercel.app/" title={data.userName + "'s time is " + data.time + " sec on stage " + data.id + "! #wave_composite_game" }>
+            <LineIcon size={30} round={false} />
+          </LineShareButton>
         </div>
         <div >
           <p>ranking</p>
