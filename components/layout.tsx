@@ -30,6 +30,7 @@ export default function Layout({
         />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@tran0826" />
       </Head>
       <header className={styles.header}>
         {home ? (
