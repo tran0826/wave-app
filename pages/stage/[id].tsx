@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import Layout from "../../components/layout"
 import SketchComponent from "../../components/sketch"
 import { calcWaveSimilarity, getWaveCoefficient } from "../../lib/wave"
+import utilStyles from '../../styles/utils.module.css'
 
 
 
@@ -81,7 +82,7 @@ const Stage: NextPage<Props> = (props) => {
 
             {startFlag ?
                 <div>
-                    <SketchComponent coefficient={[answerCoefficient, userCoefficient]} theta={theta} />
+                    <SketchComponent answerCoefficient={answerCoefficient} userCoefficient={userCoefficient} theta={theta} />
                     <p>similarity: {waveSimilarity}</p>
                     <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
@@ -95,11 +96,12 @@ const Stage: NextPage<Props> = (props) => {
                                 userCoefficient.map((num, id) => (
                                     <li key={id}>
                                         {"co" + id}
-                                        <input type="range" min="-1" max="1" step="0.01" id={"co" + id} onChange={() => {
+                                        <input className={utilStyles.coefficient} type="range" min="-1" max="1" step="0.01" id={"co" + id} onChange={() => {
                                             let htmlEle = document.getElementById("co" + id) as HTMLInputElement
                                             let value: number = htmlEle.valueAsNumber
-                                            setUserCoefficient(userCoefficient.map((ele, index) => (index == id ? value : ele)))
-                                            setWaveSimilarity(calcWaveSimilarity(userCoefficient, answerCoefficient))
+                                            let nxtCoefficient = userCoefficient.map((ele, index) => (index == id ? value : ele))
+                                            setUserCoefficient(nxtCoefficient)
+                                            setWaveSimilarity(calcWaveSimilarity(nxtCoefficient, answerCoefficient))
                                         }}></input>
                                         {"value:" + num}
                                     </li>
@@ -108,7 +110,7 @@ const Stage: NextPage<Props> = (props) => {
                         </ul>
                     </div>
                     {
-                        waveSimilarity < 10 ?
+                        waveSimilarity <= 10 ?
                             <div>
                                 <Link
                                     as={`/result/${props.id}`}
@@ -126,7 +128,7 @@ const Stage: NextPage<Props> = (props) => {
                             </div>
                             :
                             <div>
-                                <p>Wrong answer </p>
+                                <p>Wrong answer, reduce the similarity to less than 10 </p>
                             </div>
                     }
                 </div>
