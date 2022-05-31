@@ -1,12 +1,9 @@
 import type { NextPage, GetStaticProps } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import SketchComponent from '../components/sketch'
 import Layout from '../components/layout'
 import Link from 'next/link'
-import { useState } from 'react'
 import utilStyles from '../styles/utils.module.css'
+import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from 'react-share'
 
 type Props = {
   stages: number[]
@@ -14,7 +11,7 @@ type Props = {
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   //call api
-  const stages = [1, 2, 3, 4, 5, 6]
+  const stages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   return {
     props: {
       stages
@@ -45,6 +42,12 @@ const Home: NextPage<Props> = ({ stages }) => {
           </ul>
         </div>
       </section>
+      <TwitterShareButton url="https://wave-app-nine.vercel.app/" title="Let's Play Wave composite game!">
+        <TwitterIcon size={30} round={false} />
+      </TwitterShareButton>
+      <LineShareButton url="https://wave-app-nine.vercel.app/" title="Let's Play Wave composite game!">
+        <LineIcon size={30} round={false} />
+      </LineShareButton>
     </Layout>
   )
 }

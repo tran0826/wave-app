@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic'
 import p5Types from 'p5'
 import styles from './layout.module.css'
 import { Point, renderPoints } from '../lib/point'
-import { getWavePoints } from '../lib/wave'
+import { calcWaveSimilarity, getWavePoints } from '../lib/wave'
 
 const Sketch = dynamic(import('react-p5'), {
     loading: () => <></>,
@@ -11,7 +11,7 @@ const Sketch = dynamic(import('react-p5'), {
 
 
 
-const SketchComponent = ({ answerCoefficient,userCoefficient, theta }: { answerCoefficient: number[],userCoefficient:number[], theta: number }) => {
+const SketchComponent = ({ answerCoefficient, userCoefficient, theta }: { answerCoefficient: number[], userCoefficient: number[], theta: number }) => {
     const preload = (p5: p5Types) => {
         //load image
     }
@@ -26,6 +26,7 @@ const SketchComponent = ({ answerCoefficient,userCoefficient, theta }: { answerC
         let colorGray = p5.color(220)
         let colorGrayAlpha = p5.color(0, 80, 80, 120)
         let colorBlue = p5.color(0, 0, 255)
+        let colorRed = p5.color(255, 0, 0)
         p5.background(colorGray)
         let r = 100
         //    let coefficient:number[] = [1,0,-1/9,0,1/25,0,-1/49]
@@ -41,7 +42,11 @@ const SketchComponent = ({ answerCoefficient,userCoefficient, theta }: { answerC
         let points = getWavePoints({ r, coefficient: answerCoefficient, xPerPixel, width, height, theta })
         renderPoints(p5, points)
 
-        p5.stroke(colorBlue)
+        if (calcWaveSimilarity(userCoefficient, answerCoefficient) <= 10) {
+            p5.stroke(colorRed)
+        } else {
+            p5.stroke(colorBlue)
+        }
         points = getWavePoints({ r, coefficient: userCoefficient, xPerPixel, width, height, theta })
         renderPoints(p5, points)
     }

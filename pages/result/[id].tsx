@@ -5,13 +5,6 @@ import DefaultErrorPage from 'next/error'
 import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from "react-share"
 
 
-/*todo
-Change SSG and Coefficient is need one more set in useState.
-getStaticPaths is needed.
-SSR is used for Title.
-*/
-
-
 type Props = {
   data?: {
     ranking: {
