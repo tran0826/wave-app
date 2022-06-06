@@ -6,21 +6,25 @@ import Layout from "../../components/layout"
 import SketchComponent from "../../components/sketch"
 import { calcWaveSimilarity, getWaveCoefficient } from "../../lib/wave"
 import utilStyles from '../../styles/utils.module.css'
-
-
+import { v4 as uuidv4 } from "uuid"
+import { Stage as StageData } from "../../lib/stage"
 
 type Props = {
-    id: number
+    stageData: StageData
 }
 
 
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     if (params) {
-        const id = Number(params.id as string)
+        const stageId = Number(params.id as string)
+        const api_base_url = process.env.API_BASE_URL
+        const url = api_base_url + "/stage";
+        const stages = await fetch(url).then((r) => r.json()) as StageData[]
+        const stageData = stages[stageId - 1]
         return {
             props: {
-                id
+                stageData
             }
         }
     } else {
@@ -28,16 +32,18 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     }
 }
 export const getStaticPaths: GetStaticPaths = async () => {
-    const stages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    const api_base_url = process.env.API_BASE_URL
+    const url = api_base_url + "/stage";
+    const stages = await fetch(url).then((r) => r.json()) as StageData[]
     return {
-        paths: stages.map((e) => ("/stage/" + e)),
+        paths: stages.map((stage) => ("/stage/" + stage.id)),
         fallback: false
     }
 }
 
-const Stage: NextPage<Props> = (props) => {
-    const [answerCoefficient, setAnswerCoefficient] = useState(Array(props.id).fill(0) as number[])
-    const [userCoefficient, setUserCoefficient] = useState(Array(props.id).fill(0) as number[])
+const Stage: NextPage<Props> = ({stageData}) => {
+    const [answerCoefficient, setAnswerCoefficient] = useState(Array(stageData.difficulty).fill(0) as number[])
+    const [userCoefficient, setUserCoefficient] = useState(Array(stageData.difficulty).fill(0) as number[])
     const [waveSimilarity, setWaveSimilarity] = useState(0)
     const [theta, setTheta] = useState(0)
     const [startFlag, setStartFlag] = useState(false)
@@ -48,12 +54,12 @@ const Stage: NextPage<Props> = (props) => {
     //when game start
     useEffect(() => {
         console.log("useEffect")
-        setAnswerCoefficient(getWaveCoefficient(props.id))
+        setAnswerCoefficient(getWaveCoefficient(stageData.difficulty))
         const interval = setInterval(() => {
             setNowTime(Date.now())
         }, 100)
         return () => clearInterval(interval)
-    }, [props.id])
+    }, [stageData.difficulty])
 
     const intervalRef = useRef<NodeJS.Timer | null>(null)
     const moveWave = useCallback(() => {
@@ -76,9 +82,9 @@ const Stage: NextPage<Props> = (props) => {
     return (
         <Layout>
             <Head>
-                <title>stage {props.id}</title>
+                <title>stage {stageData.id}</title>
             </Head>
-            <h1>STAGE {props.id}</h1>
+            <h1>STAGE {stageData.id}</h1>
 
             {startFlag ?
                 <div>
@@ -113,13 +119,14 @@ const Stage: NextPage<Props> = (props) => {
                         waveSimilarity <= 10 ?
                             <div>
                                 <Link
-                                    as={`/result/${props.id}`}
+                                    as={`/result/${stageData.id}`}
                                     href={
                                         {
-                                            pathname: `/result/${props.id}`,
+                                            pathname: `/result/${stageData.id}`,
                                             query: {
                                                 time: Math.round((nowTime - startTime) / 100) / 10,
-                                                userName: userName
+                                                userName: userName,
+                                                uuid: uuidv4()
                                             }
                                         }}
                                 >

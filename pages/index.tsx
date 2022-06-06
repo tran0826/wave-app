@@ -4,14 +4,17 @@ import Layout from '../components/layout'
 import Link from 'next/link'
 import utilStyles from '../styles/utils.module.css'
 import { LineIcon, LineShareButton, TwitterIcon, TwitterShareButton } from 'react-share'
+import { Stage } from '../lib/stage'
 
 type Props = {
-  stages: number[]
+  stages: Stage[]
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
   //call api
-  const stages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const api_base_url = process.env.API_BASE_URL
+  const url = api_base_url + "/stage";
+  const stages = await fetch(url).then((r) => r.json()) as Stage[]
   return {
     props: {
       stages
@@ -31,10 +34,10 @@ const Home: NextPage<Props> = ({ stages }) => {
         <div>
           <ul className={utilStyles.headingMd}>
             {
-              stages.map((num, id) => (
+              stages.map((stage, id) => (
                 <li key={id}>
-                  <Link href={`/stage/${num}`}>
-                    <a>Stage {num}</a>
+                  <Link href={`/stage/${stage.id}`}>
+                    <a>Stage {stage.id}</a>
                   </Link>
                 </li>
               ))
