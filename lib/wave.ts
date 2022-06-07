@@ -21,7 +21,6 @@ export const getWaveCoefficient = (number: number) => {
     for (let i = 0; i < number; i++) {
         coefficient[i] = Math.round((2 * Math.random() - 1) * 100) / 100
     }
-    console.log(coefficient)
     return coefficient
 }
 

@@ -8,6 +8,7 @@ import { calcWaveSimilarity, getWaveCoefficient } from "../../lib/wave"
 import utilStyles from '../../styles/utils.module.css'
 import { v4 as uuidv4 } from "uuid"
 import { Stage as StageData } from "../../lib/stage"
+import WaveSound from "../../components/wave_sound"
 
 type Props = {
     stageData: StageData
@@ -88,6 +89,7 @@ const Stage: NextPage<Props> = ({stageData}) => {
 
             {startFlag ?
                 <div>
+                    <WaveSound coefficient={userCoefficient} />
                     <SketchComponent answerCoefficient={answerCoefficient} userCoefficient={userCoefficient} theta={theta} />
                     <p>similarity: {waveSimilarity}</p>
                     <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
