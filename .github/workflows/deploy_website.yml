@@ -26,6 +26,8 @@ jobs:
       # 投稿内容を更新するために npm run build:posts を走らせる
       - name: Recreate all posts
         shell: bash
+        env: 
+          API_BASE_URL: ${{ secrets.API_BASE_URL }}
         run: |
           npm install
           npm run build
