@@ -46,17 +46,30 @@ const Free: NextPage = () => {
     })
     setUserCoefficient(nxtCoefficient)
   }, [])
+  const setSquareWave = useCallback(() => {
+    let nxtCoefficient = userCoefficient.map((value,idx)=>{
+      let ret:number
+      if(idx % 2 == 0)ret = 1/(idx+1)
+      else ret = 0
+      ret = Math.round(ret * 1000)/1000
+      let htmlEle = document.getElementById("co" + idx) as HTMLInputElement
+      htmlEle.value = String(ret)
+      return ret
+    })
+    setUserCoefficient(nxtCoefficient)
+  }, [])
 
   return (
     <Layout>
       <div>
         <WaveSound coefficient={userCoefficient} />
-        <SketchComponent userCoefficient={userCoefficient} theta={theta} />
+        <SketchComponent xPerPixel={0.01} userCoefficient={userCoefficient} theta={theta} />
         <div>
           <button onClick={moveWave}>start move</button>
           <button onClick={stopWave}>stop move</button>
           <button onClick={resetWave}>reset wave</button>
           <button onClick={setSawtoothWave}>set sawtooth wave</button>
+          <button onClick={setSquareWave}>set square wave</button>
         </div>
         <div >
           <ul>

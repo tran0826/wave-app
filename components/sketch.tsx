@@ -11,13 +11,13 @@ const Sketch = dynamic(import('react-p5'), {
 
 
 
-const SketchComponent = ({ answerCoefficient = undefined, userCoefficient, theta }: { answerCoefficient?: number[] | undefined, userCoefficient: number[], theta: number }) => {
+const SketchComponent = ({xPerPixel=0.05, answerCoefficient = undefined, userCoefficient, theta }: { xPerPixel?:number, answerCoefficient?: number[] | undefined, userCoefficient: number[], theta: number }) => {
     const preload = (p5: p5Types) => {
         //load image
     }
 
     const setup = (p5: p5Types, canvasParentRef: Element) => {
-        p5.createCanvas(p5.windowWidth / 2, p5.windowHeight / 2).parent(canvasParentRef)
+        p5.createCanvas(p5.windowWidth * 0.8, p5.windowHeight / 2).parent(canvasParentRef)
         //todo setup
     }
 
@@ -30,8 +30,8 @@ const SketchComponent = ({ answerCoefficient = undefined, userCoefficient, theta
         p5.background(colorGray)
         let r = 100
         //    let coefficient:number[] = [1,0,-1/9,0,1/25,0,-1/49]
-        let xPerPixel = 0.05
-        let width = p5.windowWidth / 2
+    //    let xPerPixel = 0.05
+        let width = p5.windowWidth * 0.8
         let height = p5.windowHeight / 2
 
         p5.smooth()
@@ -55,7 +55,7 @@ const SketchComponent = ({ answerCoefficient = undefined, userCoefficient, theta
     }
 
     const windowResized = (p5: p5Types) => {
-        p5.resizeCanvas(p5.windowWidth / 2, p5.windowHeight / 2)
+        p5.resizeCanvas(p5.windowWidth * 0.8, p5.windowHeight / 2)
     }
 
     return (
