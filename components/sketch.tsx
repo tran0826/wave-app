@@ -11,7 +11,7 @@ const Sketch = dynamic(import('react-p5'), {
 
 
 
-const SketchComponent = ({ answerCoefficient, userCoefficient, theta }: { answerCoefficient: number[], userCoefficient: number[], theta: number }) => {
+const SketchComponent = ({ answerCoefficient = undefined, userCoefficient, theta }: { answerCoefficient?: number[] | undefined, userCoefficient: number[], theta: number }) => {
     const preload = (p5: p5Types) => {
         //load image
     }
@@ -37,12 +37,15 @@ const SketchComponent = ({ answerCoefficient, userCoefficient, theta }: { answer
         p5.smooth()
         p5.strokeWeight(3)
         p5.strokeCap(p5.SQUARE)
+        let points:Point[]
+        if (answerCoefficient) {
+            p5.stroke(colorGrayAlpha)
+            points = getWavePoints({ r, coefficient: answerCoefficient, xPerPixel, width, height, theta })
+            renderPoints(p5, points)
+        }
 
-        p5.stroke(colorGrayAlpha)
-        let points = getWavePoints({ r, coefficient: answerCoefficient, xPerPixel, width, height, theta })
-        renderPoints(p5, points)
 
-        if (calcWaveSimilarity(userCoefficient, answerCoefficient) <= 10) {
+        if (answerCoefficient && calcWaveSimilarity(userCoefficient, answerCoefficient) <= 10) {
             p5.stroke(colorRed)
         } else {
             p5.stroke(colorBlue)

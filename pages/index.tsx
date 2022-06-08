@@ -32,6 +32,9 @@ const Home: NextPage<Props> = ({ stages }) => {
       <section>
         <h1>Wave Composite Game</h1>
         <div>
+          <Link href="/free">
+            <a className={utilStyles.headingMd}>Free Mode</a>
+          </Link>
           <ul className={utilStyles.headingMd}>
             {
               stages.map((stage, id) => (

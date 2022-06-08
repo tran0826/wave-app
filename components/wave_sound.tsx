@@ -44,6 +44,9 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
       audioContext.current.resume()
     }
     if (oscNodes.current && !isPlaySound) {
+      let htmlEle = document.getElementById("gain") as HTMLInputElement
+      let value: number = htmlEle.valueAsNumber
+      if (masterGainNode.current) masterGainNode.current.gain.value = value
       oscNodes.current.forEach((e) => {
         e.start(0)
       })
@@ -65,9 +68,9 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
   }, [isPlaySound])
 
   useEffect(() => {
-    router.events.on('routeChangeStart',soundStop)
+    router.events.on('routeChangeStart', soundStop)
     return () => {
-      router.events.off('routeChangeStart',soundStop)
+      router.events.off('routeChangeStart', soundStop)
     }
   })
 
@@ -82,12 +85,12 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
       </div>
       <div>
         gain
-        <input type="range" min="0" max="1" step="0.05" id="gain" onChange={() => {
+        <input type="range" min="0" max="1" step="0.02" id="gain" onChange={() => {
           let htmlEle = document.getElementById("gain") as HTMLInputElement
           let value: number = htmlEle.valueAsNumber
           if (masterGainNode.current) masterGainNode.current.gain.value = value
         }}></input>
-        
+
       </div>
     </div>
   )

@@ -103,7 +103,7 @@ const Stage: NextPage<Props> = ({stageData}) => {
                             {
                                 userCoefficient.map((num, id) => (
                                     <li key={id}>
-                                        {"co" + id}
+                                        {"co" + (id + 1)}
                                         <input className={utilStyles.coefficient} type="range" min="-1" max="1" step="0.01" id={"co" + id} onChange={() => {
                                             let htmlEle = document.getElementById("co" + id) as HTMLInputElement
                                             let value: number = htmlEle.valueAsNumber
