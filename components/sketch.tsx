@@ -11,7 +11,7 @@ const Sketch = dynamic(import('react-p5'), {
 
 
 
-const SketchComponent = ({xPerPixel=0.05, answerCoefficient = undefined, userCoefficient, theta }: { xPerPixel?:number, answerCoefficient?: number[] | undefined, userCoefficient: number[], theta: number }) => {
+const SketchComponent = ({xPerPixel=0.01, answerCoefficient = undefined, userCoefficient, theta }: { xPerPixel?:number, answerCoefficient?: number[] | undefined, userCoefficient: number[], theta: number }) => {
     const preload = (p5: p5Types) => {
         //load image
     }
@@ -33,7 +33,7 @@ const SketchComponent = ({xPerPixel=0.05, answerCoefficient = undefined, userCoe
     //    let xPerPixel = 0.05
         let width = p5.windowWidth * 0.8
         let height = p5.windowHeight / 2
-
+        if(width <= 600)xPerPixel = 0.05
         p5.smooth()
         p5.strokeWeight(3)
         p5.strokeCap(p5.SQUARE)

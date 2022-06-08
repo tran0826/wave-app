@@ -85,7 +85,7 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
       </div>
       <div>
         gain
-        <input type="range" min="0" max="1" step="0.02" id="gain" onChange={() => {
+        <input type="range" min="0" max="0.1" step="0.002" id="gain" onChange={() => {
           let htmlEle = document.getElementById("gain") as HTMLInputElement
           let value: number = htmlEle.valueAsNumber
           if (masterGainNode.current) masterGainNode.current.gain.value = value

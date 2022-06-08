@@ -46,6 +46,17 @@ const Home: NextPage<Props> = ({ stages }) => {
               ))
             }
           </ul>
+          <ul className={utilStyles.headingMd}>
+          {
+            stages.map((stage, id) => (
+              <li key={id}>
+                <Link href={`/ranking/${stage.id}`}>
+                  <a>Ranking Stage {stage.id}</a>
+                </Link>
+              </li>
+            ))
+          }
+          </ul>
         </div>
       </section>
       <TwitterShareButton url="https://wave-app-nine.vercel.app/" title="Let's Play Wave composite game!">

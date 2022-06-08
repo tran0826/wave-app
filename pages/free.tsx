@@ -14,7 +14,7 @@ const Free: NextPage = () => {
       return
     }
     intervalRef.current = setInterval(() => {
-      setTheta(theta => theta + 1)
+      setTheta(theta => theta + 2)
     }, 10)
   }, [])
   const stopWave = useCallback(() => {
