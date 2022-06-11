@@ -1,49 +1,44 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from './layout.module.css'
-import utilStyles from '../styles/utils.module.css'
-import Link from 'next/link'
+import Head from "next/head"
+import Image from "next/image"
+import Link from "next/link"
 
-const name = 'tran0826'
-export const siteTitle = 'Wave Composite Game'
+const name = "tran0826"
+export const siteTitle = "Wave Composite Game"
 
 export default function Layout({
-  children, 
-  home 
+  children,
+  home,
 }: {
-  children : React.ReactNode
-  home? : boolean
-} ) {
+  children: React.ReactNode
+  home?: boolean
+}) {
   return (
     <div>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-        <meta
-          name="description"
-          content="Wave Composite Game"
-        />
+        <meta name="description" content="Wave Composite Game" />
         <meta
           property="og:image"
           content={`https://og-image.vercel.app/${encodeURI(
-            siteTitle
+            siteTitle,
           )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
         />
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:creator" content="@tran0826" />
       </Head>
-      <header className={styles.header}>
+      <footer className="">
         {home ? (
           <>
             <Image
               priority
               src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
+              className=""
               height={144}
               width={144}
               alt={name}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className="">{name}</h1>
           </>
         ) : (
           <>
@@ -52,24 +47,24 @@ export default function Layout({
                 <Image
                   priority
                   src="/images/profile.jpg"
-                  className={utilStyles.borderCircle}
+                  className=""
                   height={108}
                   width={108}
                   alt={name}
                 />
               </a>
             </Link>
-            <h2 className={utilStyles.headingLg}>
+            <h2 className="">
               <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
+                <a className="">{name}</a>
               </Link>
             </h2>
           </>
         )}
-      </header>
+      </footer>
       <main>{children}</main>
       {!home && (
-        <div className={styles.backToHome}>
+        <div className="">
           <Link href="/">
             <a>← Back to home</a>
           </Link>

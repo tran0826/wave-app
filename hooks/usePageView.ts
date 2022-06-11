@@ -1,24 +1,24 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter } from "next/router"
+import { useEffect } from "react"
 
-import { GA_ID, pageview } from "../lib/gtag";
+import { GA_ID, pageview } from "../lib/gtag"
 
 export const usePageView = () => {
-  const router = useRouter();
+  const router = useRouter()
   useEffect(() => {
     if (!GA_ID) {
-      return;
+      return
     }
 
     const handleRouteChange = (url: string, { shallow }: any) => {
       if (!shallow) {
-        pageview(url);
+        pageview(url)
       }
-    };
+    }
 
-    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("routeChangeComplete", handleRouteChange)
     return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
-};
+      router.events.off("routeChangeComplete", handleRouteChange)
+    }
+  }, [router.events])
+}

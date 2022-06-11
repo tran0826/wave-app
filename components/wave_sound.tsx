@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const BASE_FREQ = 220
 
@@ -68,29 +68,40 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
   }, [isPlaySound])
 
   useEffect(() => {
-    router.events.on('routeChangeStart', soundStop)
+    router.events.on("routeChangeStart", soundStop)
     return () => {
-      router.events.off('routeChangeStart', soundStop)
+      router.events.off("routeChangeStart", soundStop)
     }
   })
 
   return (
     <div>
       <div>
-        {isPlaySound ?
-          <button type="button" onClick={soundStop}>sound stop</button>
-          :
-          <button type="button" onClick={soundStart}>sound start</button>
-        }
+        {isPlaySound ? (
+          <button type="button" onClick={soundStop}>
+            sound stop
+          </button>
+        ) : (
+          <button type="button" onClick={soundStart}>
+            sound start
+          </button>
+        )}
       </div>
       <div>
         gain
-        <input type="range" min="0" max="0.1" step="0.002" id="gain" onChange={() => {
-          let htmlEle = document.getElementById("gain") as HTMLInputElement
-          let value: number = htmlEle.valueAsNumber
-          if (masterGainNode.current) masterGainNode.current.gain.value = value
-        }}></input>
-
+        <input
+          type="range"
+          min="0"
+          max="0.1"
+          step="0.002"
+          id="gain"
+          onChange={() => {
+            let htmlEle = document.getElementById("gain") as HTMLInputElement
+            let value: number = htmlEle.valueAsNumber
+            if (masterGainNode.current)
+              masterGainNode.current.gain.value = value
+          }}
+        ></input>
       </div>
     </div>
   )

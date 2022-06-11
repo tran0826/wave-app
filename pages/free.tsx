@@ -1,12 +1,13 @@
-import { NextPage } from "next";
-import { useCallback, useRef, useState } from "react";
-import Layout from "../components/layout";
-import SketchComponent from "../components/sketch";
-import WaveSound from "../components/wave_sound";
-import utilStyles from '../styles/utils.module.css'
+import { NextPage } from "next"
+import { useCallback, useRef, useState } from "react"
+import Layout from "../components/layout"
+import SketchComponent from "../components/sketch"
+import WaveSound from "../components/wave_sound"
 
 const Free: NextPage = () => {
-  const [userCoefficient, setUserCoefficient] = useState(Array(70).fill(0) as number[])
+  const [userCoefficient, setUserCoefficient] = useState(
+    Array(70).fill(0) as number[],
+  )
   const [theta, setTheta] = useState(0)
   const intervalRef = useRef<NodeJS.Timer | null>(null)
   const moveWave = useCallback(() => {
@@ -14,7 +15,7 @@ const Free: NextPage = () => {
       return
     }
     intervalRef.current = setInterval(() => {
-      setTheta(theta => theta + 2)
+      setTheta((theta) => theta + 2)
     }, 10)
   }, [])
   const stopWave = useCallback(() => {
@@ -25,21 +26,21 @@ const Free: NextPage = () => {
     intervalRef.current = null
   }, [])
   const resetWave = useCallback(() => {
-    let nxtCoefficient = userCoefficient.map((value,idx)=>{
-      let ret:number=0
+    let nxtCoefficient = userCoefficient.map((value, idx) => {
+      let ret: number = 0
       let htmlEle = document.getElementById("co" + idx) as HTMLInputElement
       htmlEle.value = String(ret)
       return ret
     })
     setUserCoefficient(nxtCoefficient)
-  },[])
+  }, [])
 
   const setSawtoothWave = useCallback(() => {
-    let nxtCoefficient = userCoefficient.map((value,idx)=>{
-      let ret:number
-      if(idx % 2 == 0)ret = 1/(idx+1)
-      else ret = -1/(idx+1)
-      ret = Math.round(ret * 1000)/1000
+    let nxtCoefficient = userCoefficient.map((value, idx) => {
+      let ret: number
+      if (idx % 2 == 0) ret = 1 / (idx + 1)
+      else ret = -1 / (idx + 1)
+      ret = Math.round(ret * 1000) / 1000
       let htmlEle = document.getElementById("co" + idx) as HTMLInputElement
       htmlEle.value = String(ret)
       return ret
@@ -47,11 +48,11 @@ const Free: NextPage = () => {
     setUserCoefficient(nxtCoefficient)
   }, [])
   const setSquareWave = useCallback(() => {
-    let nxtCoefficient = userCoefficient.map((value,idx)=>{
-      let ret:number
-      if(idx % 2 == 0)ret = 1/(idx+1)
+    let nxtCoefficient = userCoefficient.map((value, idx) => {
+      let ret: number
+      if (idx % 2 == 0) ret = 1 / (idx + 1)
       else ret = 0
-      ret = Math.round(ret * 1000)/1000
+      ret = Math.round(ret * 1000) / 1000
       let htmlEle = document.getElementById("co" + idx) as HTMLInputElement
       htmlEle.value = String(ret)
       return ret
@@ -63,7 +64,11 @@ const Free: NextPage = () => {
     <Layout>
       <div>
         <WaveSound coefficient={userCoefficient} />
-        <SketchComponent xPerPixel={0.01} userCoefficient={userCoefficient} theta={theta} />
+        <SketchComponent
+          xPerPixel={0.01}
+          userCoefficient={userCoefficient}
+          theta={theta}
+        />
         <div>
           <button onClick={moveWave}>start move</button>
           <button onClick={stopWave}>stop move</button>
@@ -71,28 +76,35 @@ const Free: NextPage = () => {
           <button onClick={setSawtoothWave}>set sawtooth wave</button>
           <button onClick={setSquareWave}>set square wave</button>
         </div>
-        <div >
+        <div>
           <ul>
-            {
-              userCoefficient.map((num, id) => (
-                <li key={id}>
-                  {"co" + (id + 1)}
-                  <input className={utilStyles.coefficient} type="range" min="-1" max="1" step="0.001" id={"co" + id} onChange={() => {
-                    let htmlEle = document.getElementById("co" + id) as HTMLInputElement
+            {userCoefficient.map((num, id) => (
+              <li key={id}>
+                {"co" + (id + 1)}
+                <input
+                  className=""
+                  type="range"
+                  min="-1"
+                  max="1"
+                  step="0.001"
+                  id={"co" + id}
+                  onChange={() => {
+                    let htmlEle = document.getElementById(
+                      "co" + id,
+                    ) as HTMLInputElement
                     let value: number = htmlEle.valueAsNumber
-                    let nxtCoefficient = userCoefficient.map((ele, index) => (index == id ? value : ele))
+                    let nxtCoefficient = userCoefficient.map((ele, index) =>
+                      index == id ? value : ele,
+                    )
                     setUserCoefficient(nxtCoefficient)
-                  }}></input>
-                  {"value:" + num}
-                </li>
-              ))
-            }
+                  }}
+                ></input>
+                {"value:" + num}
+              </li>
+            ))}
           </ul>
         </div>
-
       </div>
-
-
     </Layout>
   )
 }

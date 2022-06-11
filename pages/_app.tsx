@@ -1,7 +1,7 @@
-import '../styles/globals.css'
+import "tailwindcss/tailwind.css"
 
-import type { AppProps } from 'next/app'
-import { usePageView } from '../hooks/usePageView'
+import type { AppProps } from "next/app"
+import { usePageView } from "../hooks/usePageView"
 
 function MyApp({ Component, pageProps }: AppProps) {
   usePageView()
