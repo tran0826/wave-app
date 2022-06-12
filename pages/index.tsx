@@ -35,7 +35,7 @@ const Home: NextPage<Props> = ({ stages }) => {
       <section className="flex flex-col items-center">
         <div className="flex flex-col items-center pt-8 pb-16 max-w-xl text-center lg:pt-32 lg:pb-48">
           <p className="mb-4 font-semibold text-indigo-500 md:mb-6 md:text-lg xl:text-xl">
-            Interesting simulator
+            Fourier series simulator
           </p>
 
           <h1 className="mb-8 text-4xl font-bold text-black sm:text-5xl md:mb-12 md:text-5xl">
@@ -44,12 +44,12 @@ const Home: NextPage<Props> = ({ stages }) => {
 
           <div className="flex flex-col gap-2.5 w-6/12 sm:justify-center">
             <details className="text-red-500 active:text-red-700 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none">
-              <summary className="block py-3 text-sm font-semibold text-center outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                <div>Play Time Attack</div>
+              <summary className=" py-3 text-sm font-semibold text-center outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
+                Play Time Attack
               </summary>
-              <ul className="">
+              <ul>
                 {stages.map((stage, id) => (
-                  <li key={id}>
+                  <li key={id} className="pb-1">
                     <Link href={`/stage/${stage.id}`}>
                       <a className="hover:text-indigo-500 active:text-indigo-600 transition duration-100">
                         Stage {stage.id}
@@ -62,17 +62,17 @@ const Home: NextPage<Props> = ({ stages }) => {
 
             <Link href="/free">
               <a className="inline-block py-3 text-sm font-semibold text-center text-indigo-500 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                Play Free Mode
+                Play Simulation Mode
               </a>
             </Link>
 
             <details className="text-gray-500 active:text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none">
-              <summary className="block py-3 text-sm font-semibold text-center outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                <div>View Ranking</div>
+              <summary className="py-3 text-sm font-semibold text-center outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
+                View Ranking
               </summary>
               <ul className="">
                 {stages.map((stage, id) => (
-                  <li key={id}>
+                  <li key={id} className="pb-1">
                     <Link href={`/ranking/${stage.id}`}>
                       <a className="hover:text-indigo-500 active:text-indigo-600 transition duration-100">
                         Stage {stage.id}

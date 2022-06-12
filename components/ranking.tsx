@@ -12,7 +12,7 @@ const RankingList = ({ data }: { data: Data }) => {
         {data.scores.map((score, index) => (
           <li key={index} className="py-1">
             {index <= 2 ? (
-              <p className="font-bold border-b border-y-blue-300 sm:text-xl md:mb-2 md:text-2xl">
+              <p className="font-bold border-b border-y-blue-300 sm:text-2xl md:mb-2 md:text-2xl">
                 {index + 1}th {score.user_name} : {score.clear_time} sec
               </p>
             ) : (

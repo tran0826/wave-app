@@ -85,99 +85,103 @@ const Stage: NextPage<Props> = ({ stageData }) => {
       <Head>
         <title>stage {stageData.id}</title>
       </Head>
-      <h1>STAGE {stageData.id}</h1>
+      <section className="flex flex-col items-center">
+        <h1 className="pt-2 mb-8 font-bold text-black sm:text-5xl md:mb-12 md:text-5xl">
+          STAGE {stageData.id}
+        </h1>
 
-      {startFlag ? (
-        <div>
-          <WaveSound coefficient={userCoefficient} />
-          <SketchComponent
-            answerCoefficient={answerCoefficient}
-            userCoefficient={userCoefficient}
-            theta={theta}
-          />
-          <p>similarity: {waveSimilarity}</p>
-          <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
+        {startFlag ? (
+          <div>
+            <WaveSound coefficient={userCoefficient} />
+            <SketchComponent
+              answerCoefficient={answerCoefficient}
+              userCoefficient={userCoefficient}
+              theta={theta}
+            />
+            <p>similarity: {waveSimilarity}</p>
+            <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
-          <div>
-            <button onClick={moveWave}>start move</button>
-            <button onClick={stopWave}>stop move</button>
-          </div>
-          <div>
-            <ul>
-              {userCoefficient.map((num, id) => (
-                <li key={id}>
-                  {"co" + (id + 1)}
-                  <input
-                    className=""
-                    type="range"
-                    min="-1"
-                    max="1"
-                    step="0.01"
-                    id={"co" + id}
-                    onChange={() => {
-                      let htmlEle = document.getElementById(
-                        "co" + id,
-                      ) as HTMLInputElement
-                      let value: number = htmlEle.valueAsNumber
-                      let nxtCoefficient = userCoefficient.map((ele, index) =>
-                        index == id ? value : ele,
-                      )
-                      setUserCoefficient(nxtCoefficient)
-                      setWaveSimilarity(
-                        calcWaveSimilarity(nxtCoefficient, answerCoefficient),
-                      )
-                    }}
-                  ></input>
-                  {"value:" + num}
-                </li>
-              ))}
-            </ul>
-          </div>
-          {waveSimilarity <= 10 ? (
             <div>
-              <Link
-                as={`/result/${stageData.id}`}
-                href={{
-                  pathname: `/result/${stageData.id}`,
-                  query: {
-                    time: Math.round((nowTime - startTime) / 100) / 10,
-                    userName: userName,
-                    uuid: uuidv4(),
-                  },
-                }}
-              >
-                <a>CLEAR!</a>
-              </Link>
+              <button onClick={moveWave}>start move</button>
+              <button onClick={stopWave}>stop move</button>
             </div>
-          ) : (
             <div>
-              <p>Wrong answer, reduce the similarity to less than 10 </p>
+              <ul>
+                {userCoefficient.map((num, id) => (
+                  <li key={id}>
+                    {"co" + (id + 1)}
+                    <input
+                      className=""
+                      type="range"
+                      min="-1"
+                      max="1"
+                      step="0.01"
+                      id={"co" + id}
+                      onChange={() => {
+                        let htmlEle = document.getElementById(
+                          "co" + id,
+                        ) as HTMLInputElement
+                        let value: number = htmlEle.valueAsNumber
+                        let nxtCoefficient = userCoefficient.map((ele, index) =>
+                          index == id ? value : ele,
+                        )
+                        setUserCoefficient(nxtCoefficient)
+                        setWaveSimilarity(
+                          calcWaveSimilarity(nxtCoefficient, answerCoefficient),
+                        )
+                      }}
+                    ></input>
+                    {"value:" + num}
+                  </li>
+                ))}
+              </ul>
             </div>
-          )}
-        </div>
-      ) : (
-        <div>
-          <p>input your name</p>
-          <input type="text" id="userNameBox" />
-          <button
-            onClick={() => {
-              setStartFlag(true)
-              setNowTime(Date.now())
-              setStartTime(Date.now())
-              setWaveSimilarity(
-                calcWaveSimilarity(userCoefficient, answerCoefficient),
-              )
-              let htmlEle = document.getElementById(
-                "userNameBox",
-              ) as HTMLInputElement
-              let value: string = htmlEle.value
-              if (value !== "") setUserName(value)
-            }}
-          >
-            Start!
-          </button>
-        </div>
-      )}
+            {waveSimilarity <= 10 ? (
+              <div>
+                <Link
+                  as={`/result/${stageData.id}`}
+                  href={{
+                    pathname: `/result/${stageData.id}`,
+                    query: {
+                      time: Math.round((nowTime - startTime) / 100) / 10,
+                      userName: userName,
+                      uuid: uuidv4(),
+                    },
+                  }}
+                >
+                  <a>CLEAR!</a>
+                </Link>
+              </div>
+            ) : (
+              <div>
+                <p>Wrong answer, reduce the similarity to less than 10 </p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            <p>input your name</p>
+            <input type="text" id="userNameBox" />
+            <button
+              onClick={() => {
+                setStartFlag(true)
+                setNowTime(Date.now())
+                setStartTime(Date.now())
+                setWaveSimilarity(
+                  calcWaveSimilarity(userCoefficient, answerCoefficient),
+                )
+                let htmlEle = document.getElementById(
+                  "userNameBox",
+                ) as HTMLInputElement
+                let value: string = htmlEle.value
+                if (value !== "") setUserName(value)
+              }}
+            >
+              Start!
+            </button>
+          </div>
+        )}
+      </section>
     </Layout>
   )
 }
