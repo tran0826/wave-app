@@ -45,7 +45,7 @@ const Home: NextPage<Props> = ({ stages }) => {
           <div className="flex flex-col gap-2.5 w-6/12 sm:justify-center">
             <details className="text-red-500 active:text-red-700 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none">
               <summary className="block py-3 text-sm font-semibold text-center outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                <div>Game Mode</div>
+                <div>Play Time Attack</div>
               </summary>
               <ul className="">
                 {stages.map((stage, id) => (
@@ -59,28 +59,29 @@ const Home: NextPage<Props> = ({ stages }) => {
                 ))}
               </ul>
             </details>
+
+            <Link href="/free">
+              <a className="inline-block py-3 text-sm font-semibold text-center text-indigo-500 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
+                Play Free Mode
+              </a>
+            </Link>
+
             <details className="text-gray-500 active:text-gray-700 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none">
               <summary className="block py-3 text-sm font-semibold text-center outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                <div>Ranking</div>
+                <div>View Ranking</div>
               </summary>
               <ul className="">
                 {stages.map((stage, id) => (
                   <li key={id}>
                     <Link href={`/ranking/${stage.id}`}>
                       <a className="hover:text-indigo-500 active:text-indigo-600 transition duration-100">
-                        Ranking Stage {stage.id}
+                        Stage {stage.id}
                       </a>
                     </Link>
                   </li>
                 ))}
               </ul>
             </details>
-
-            <Link href="/free">
-              <a className="inline-block py-3 text-sm font-semibold text-center text-white bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                Free Mode
-              </a>
-            </Link>
           </div>
         </div>
       </section>

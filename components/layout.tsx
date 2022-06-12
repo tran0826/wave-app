@@ -53,6 +53,14 @@ export default function Layout({
                   About
                 </a>
               </Link>
+              <a
+                href="https://twitter.com/tran0826"
+                className="text-gray-500 hover:text-indigo-500 active:text-indigo-600 transition duration-100"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Contact
+              </a>
             </nav>
 
             <div className="flex gap-4">

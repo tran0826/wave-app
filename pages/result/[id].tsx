@@ -8,6 +8,7 @@ import {
   TwitterShareButton,
 } from "react-share"
 import Layout from "../../components/layout"
+import RankingList from "../../components/ranking"
 import { Score, PostScore } from "../../lib/score"
 
 type Props = {
@@ -72,52 +73,49 @@ const Result: NextPage<Props> = ({ data, err }: Props) => {
         <Head>
           <title>result stage {data.stageId}</title>
         </Head>
-        <h1>RESULT STAGE {data.stageId}</h1>
-        <div>
-          <p>
-            {data.userName + "'s"} time is {data.clearTime} sec!
-          </p>
-        </div>
-        <div>
-          <TwitterShareButton
-            url="https://wave-app-nine.vercel.app/"
-            title={
-              data.userName +
-              "'s time is " +
-              data.clearTime +
-              " sec on stage " +
-              data.stageId +
-              "! #wave_composite_game"
-            }
-          >
-            <TwitterIcon size={30} round={false} />
-          </TwitterShareButton>
-          <LineShareButton
-            url="https://wave-app-nine.vercel.app/"
-            title={
-              data.userName +
-              "'s time is " +
-              data.clearTime +
-              " sec on stage " +
-              data.stageId +
-              "! #wave_composite_game"
-            }
-          >
-            <LineIcon size={30} round={false} />
-          </LineShareButton>
-        </div>
-        <div>
-          <p>ranking</p>
-          <ol>
-            {data.scores.map((score, index) => (
-              <li key={index}>
-                <p>
-                  {score.user_name}:{score.clear_time}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <section className="flex flex-col items-center">
+          <div className="flex flex-col items-center max-w-xl text-center">
+            <h1 className="pt-16 mb-8 font-bold text-black sm:text-5xl md:mb-32 md:text-5xl">
+              RESULT STAGE {data.stageId}
+            </h1>
+            <p className="mb-4 text-4xl font-bold text-blue-700 md:mb-4">
+              {data.userName + "'s"} time is {data.clearTime} sec!
+            </p>
+            <p className="mb-4 text-xl text-black md:mb-4">share your time</p>
+          </div>
+          <div className="mb-12 md:mb-12">
+            <TwitterShareButton
+              url="https://wave-app-nine.vercel.app/"
+              title={
+                data.userName +
+                "'s time is " +
+                data.clearTime +
+                " sec on stage " +
+                data.stageId +
+                "! #wave_composite_game"
+              }
+            >
+              <TwitterIcon size={30} round={false} />
+            </TwitterShareButton>
+            <LineShareButton
+              url="https://wave-app-nine.vercel.app/"
+              title={
+                data.userName +
+                "'s time is " +
+                data.clearTime +
+                " sec on stage " +
+                data.stageId +
+                "! #wave_composite_game"
+              }
+            >
+              <LineIcon size={30} round={false} />
+            </LineShareButton>
+          </div>
+          <h2 className="mb-6 text-4xl font-bold text-black md:mb-6">
+            RANKING
+          </h2>
+          <RankingList data={data} />
+        </section>
       </Layout>
     )
   }

@@ -2,6 +2,7 @@ import { GetServerSideProps, NextPage } from "next"
 import DefaultErrorPage from "next/error"
 import Head from "next/head"
 import Layout from "../../components/layout"
+import RankingList from "../../components/ranking"
 import { Score } from "../../lib/score"
 
 type Props = {
@@ -45,19 +46,17 @@ const Ranking: NextPage<Props> = ({ data, err }: Props) => {
         <Head>
           <title>ranking stage {data.stageId}</title>
         </Head>
-        <h1>STAGE {data.stageId}</h1>
-        <div>
-          <p>ranking</p>
-          <ol>
-            {data.scores.map((score, index) => (
-              <li key={index}>
-                <p>
-                  {score.user_name}:{score.clear_time}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
+        <section className="flex flex-col items-center">
+          <div className="flex flex-col items-center py-12 max-w-xl text-center lg:py-12">
+            <h1 className="mb-8 font-bold text-black sm:text-5xl md:mb-12 md:text-5xl">
+              SCORE ATTACK RANKING
+            </h1>
+            <h2 className="mb-6 text-4xl font-bold text-black md:mb-6">
+              STAGE {data.stageId}
+            </h2>
+          </div>
+          <RankingList data={data} />
+        </section>
       </Layout>
     )
   }
