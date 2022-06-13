@@ -1,8 +1,6 @@
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { Volume, Volume1, Volume2, VolumeX } from "react-feather"
-
-const BASE_FREQ = 220
+import { Activity, Volume, Volume1, Volume2, VolumeX } from "react-feather"
 
 const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
   const audioContext = useRef<AudioContext | null>(null)
@@ -11,13 +9,15 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
   const masterGainNode = useRef<GainNode | null>(null)
   const [isPlaySound, setIsPlaySound] = useState(false)
   const router = useRouter()
+  const [baseFreq, setBaseFreq] = useState(220)
+  const [gain, setGain] = useState(0)
 
   useEffect(() => {
     if (!gainNodes.current) {
       audioContext.current = new AudioContext()
       oscNodes.current = coefficient.map((value, idx) => {
         let ret = new OscillatorNode(audioContext.current as AudioContext)
-        ret.frequency.value = BASE_FREQ * (idx + 1)
+        ret.frequency.value = baseFreq * (idx + 1)
         ret.type = "sine"
         return ret
       })
@@ -76,29 +76,56 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
   })
 
   return (
-    <div className="py-2">
-      {isPlaySound ? (
-        <button type="button" onClick={soundStop}>
-          <Volume2 className="pt-3" size={30} />
-        </button>
-      ) : (
-        <button type="button" onClick={soundStart}>
-          <VolumeX className="pt-3" size={30} />
-        </button>
-      )}
-      <input
-        className="inline-block mx-2 text-sm font-medium"
-        type="range"
-        min="0"
-        max="0.1"
-        step="0.002"
-        id="gain"
-        onChange={() => {
-          let htmlEle = document.getElementById("gain") as HTMLInputElement
-          let value: number = htmlEle.valueAsNumber
-          if (masterGainNode.current) masterGainNode.current.gain.value = value
-        }}
-      ></input>
+    <div className="flex flex-col py-1">
+      <div className="flex flex-row">
+        {isPlaySound ? (
+          <button type="button" onClick={soundStop}>
+            <Volume2 className="" size={20} />
+          </button>
+        ) : (
+          <button type="button" onClick={soundStart}>
+            <VolumeX className="" size={20} />
+          </button>
+        )}
+        <input
+          className="inline-block mx-2 w-2/12 text-sm font-medium"
+          type="range"
+          min="0"
+          max="0.1"
+          step="0.002"
+          id="gain"
+          value={gain}
+          onChange={() => {
+            let htmlEle = document.getElementById("gain") as HTMLInputElement
+            let value: number = htmlEle.valueAsNumber
+            setGain(value)
+            if (masterGainNode.current)
+              masterGainNode.current.gain.value = value
+          }}
+        ></input>
+      </div>
+      <div className="flex flex-row">
+        <Activity className="" size={20} />
+        <input
+          className="inline-block mx-2 w-2/12 text-sm font-medium"
+          type="range"
+          min="110"
+          max="880"
+          step="10"
+          id="freq"
+          value={baseFreq}
+          onChange={() => {
+            let htmlEle = document.getElementById("freq") as HTMLInputElement
+            let value: number = htmlEle.valueAsNumber
+            setBaseFreq(value)
+            if (oscNodes.current) {
+              for (let i = 0; i < oscNodes.current.length; i++) {
+                oscNodes.current[i].frequency.value = value * (i + 1)
+              }
+            }
+          }}
+        ></input>
+      </div>
     </div>
   )
 }

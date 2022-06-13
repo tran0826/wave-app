@@ -85,20 +85,19 @@ const Stage: NextPage<Props> = ({ stageData }) => {
       <Head>
         <title>stage {stageData.id}</title>
       </Head>
-      <section className="flex flex-col items-center">
+      <section className="flex flex-col items-center text-center">
         <h1 className="pt-2 mb-8 font-bold text-black sm:text-5xl md:mb-12 md:text-5xl">
           STAGE {stageData.id}
         </h1>
 
         {startFlag ? (
-          <div>
+          <div className="w-4/5">
             <WaveSound coefficient={userCoefficient} />
             <SketchComponent
               answerCoefficient={answerCoefficient}
               userCoefficient={userCoefficient}
               theta={theta}
             />
-
             <p>similarity: {waveSimilarity}</p>
             <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
@@ -118,6 +117,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                       max="1"
                       step="0.01"
                       id={"co" + id}
+                      value={userCoefficient[id]}
                       onChange={() => {
                         let htmlEle = document.getElementById(
                           "co" + id,
@@ -155,7 +155,9 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               </div>
             ) : (
               <div>
-                <p>Wrong answer, reduce the similarity to less than 10 </p>
+                <p className="text-center">
+                  reduce the similarity to less than 10
+                </p>
               </div>
             )}
           </div>

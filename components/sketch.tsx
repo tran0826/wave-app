@@ -85,7 +85,7 @@ const SketchComponent = ({
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center text-center">
       <Sketch
         className={styles.sketch}
         preload={preload}
@@ -93,14 +93,12 @@ const SketchComponent = ({
         draw={draw}
         windowResized={windowResized}
       />
-      <p className="text-center">
+
+      <p className="text-center ">
         {userCoefficient.map((e, idx) => (
           <>
             <span key={"a" + idx} className="">
-              a<sub>{idx + 1} </sub>
-            </span>
-            <span key={"sin" + idx} className="">
-              sin{idx + 1}
+              a<sub>{idx + 1} </sub>sin{idx + 1}
             </span>
             <span key={"theta" + idx} className="italic">
               θ

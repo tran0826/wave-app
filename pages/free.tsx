@@ -63,7 +63,7 @@ const Free: NextPage = () => {
   return (
     <Layout>
       <section className="flex flex-col items-center">
-        <div>
+        <div className="w-4/5">
           <WaveSound coefficient={userCoefficient} />
           <SketchComponent
             xPerPixel={0.01}
@@ -89,6 +89,7 @@ const Free: NextPage = () => {
                     max="1"
                     step="0.001"
                     id={"co" + id}
+                    value={userCoefficient[id]}
                     onChange={() => {
                       let htmlEle = document.getElementById(
                         "co" + id,
