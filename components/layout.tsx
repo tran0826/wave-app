@@ -48,11 +48,6 @@ export default function Layout({
                   Simulator
                 </a>
               </Link>
-              <Link href="#">
-                <a className="text-gray-500 hover:text-indigo-500 active:text-indigo-600 transition duration-100">
-                  About
-                </a>
-              </Link>
               <a
                 href="https://twitter.com/tran0826"
                 className="text-gray-500 hover:text-indigo-500 active:text-indigo-600 transition duration-100"
