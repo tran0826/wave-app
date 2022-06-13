@@ -62,49 +62,51 @@ const Free: NextPage = () => {
 
   return (
     <Layout>
-      <div>
-        <WaveSound coefficient={userCoefficient} />
-        <SketchComponent
-          xPerPixel={0.01}
-          userCoefficient={userCoefficient}
-          theta={theta}
-        />
+      <section className="flex flex-col items-center">
         <div>
-          <button onClick={moveWave}>start move</button>
-          <button onClick={stopWave}>stop move</button>
-          <button onClick={resetWave}>reset wave</button>
-          <button onClick={setSawtoothWave}>set sawtooth wave</button>
-          <button onClick={setSquareWave}>set square wave</button>
+          <WaveSound coefficient={userCoefficient} />
+          <SketchComponent
+            xPerPixel={0.01}
+            userCoefficient={userCoefficient}
+            theta={theta}
+          />
+          <div>
+            <button onClick={moveWave}>start move</button>
+            <button onClick={stopWave}>stop move</button>
+            <button onClick={resetWave}>reset wave</button>
+            <button onClick={setSawtoothWave}>set sawtooth wave</button>
+            <button onClick={setSquareWave}>set square wave</button>
+          </div>
+          <div>
+            <ul>
+              {userCoefficient.map((num, id) => (
+                <li key={id}>
+                  {"co" + (id + 1)}
+                  <input
+                    className=""
+                    type="range"
+                    min="-1"
+                    max="1"
+                    step="0.001"
+                    id={"co" + id}
+                    onChange={() => {
+                      let htmlEle = document.getElementById(
+                        "co" + id,
+                      ) as HTMLInputElement
+                      let value: number = htmlEle.valueAsNumber
+                      let nxtCoefficient = userCoefficient.map((ele, index) =>
+                        index == id ? value : ele,
+                      )
+                      setUserCoefficient(nxtCoefficient)
+                    }}
+                  ></input>
+                  {"value:" + num}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div>
-          <ul>
-            {userCoefficient.map((num, id) => (
-              <li key={id}>
-                {"co" + (id + 1)}
-                <input
-                  className=""
-                  type="range"
-                  min="-1"
-                  max="1"
-                  step="0.001"
-                  id={"co" + id}
-                  onChange={() => {
-                    let htmlEle = document.getElementById(
-                      "co" + id,
-                    ) as HTMLInputElement
-                    let value: number = htmlEle.valueAsNumber
-                    let nxtCoefficient = userCoefficient.map((ele, index) =>
-                      index == id ? value : ele,
-                    )
-                    setUserCoefficient(nxtCoefficient)
-                  }}
-                ></input>
-                {"value:" + num}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+      </section>
     </Layout>
   )
 }

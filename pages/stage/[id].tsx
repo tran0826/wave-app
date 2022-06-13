@@ -98,6 +98,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               userCoefficient={userCoefficient}
               theta={theta}
             />
+
             <p>similarity: {waveSimilarity}</p>
             <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
 
@@ -109,7 +110,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               <ul>
                 {userCoefficient.map((num, id) => (
                   <li key={id}>
-                    {"co" + (id + 1)}
+                    a<sub>{id + 1}</sub>
                     <input
                       className=""
                       type="range"
@@ -159,10 +160,19 @@ const Stage: NextPage<Props> = ({ stageData }) => {
             )}
           </div>
         ) : (
-          <div>
-            <p>input your name</p>
-            <input type="text" id="userNameBox" />
+          <div className="items-center text-center">
+            <p className="pb-2">
+              Input your name, or your score will not be saved.
+            </p>
+            <input
+              type="text"
+              id="userNameBox"
+              className="block p-2.5 w-full text-sm text-gray-900 dark:placeholder:text-gray-400 dark:text-white bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-300 focus:border-blue-500 dark:border-gray-600 dark:focus:border-blue-500 focus:ring-blue-500 dark:focus:ring-blue-500"
+              placeholder=""
+              maxLength={15}
+            />
             <button
+              className="py-2 px-4 font-bold text-white bg-blue-500 hover:bg-blue-700 rounded"
               onClick={() => {
                 setStartFlag(true)
                 setNowTime(Date.now())
@@ -177,7 +187,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                 if (value !== "") setUserName(value)
               }}
             >
-              Start!
+              Game Start!
             </button>
           </div>
         )}

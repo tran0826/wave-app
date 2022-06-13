@@ -45,7 +45,7 @@ export default function Layout({
               </Link>
               <Link href="/free">
                 <a className="text-gray-500 hover:text-indigo-500 active:text-indigo-600 transition duration-100">
-                  Simulation
+                  Simulator
                 </a>
               </Link>
               <Link href="#">

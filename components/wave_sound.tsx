@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { Volume, Volume1, Volume2, VolumeX } from "react-feather"
 
 const BASE_FREQ = 220
 
@@ -75,34 +76,29 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
   })
 
   return (
-    <div>
-      <div>
-        {isPlaySound ? (
-          <button type="button" onClick={soundStop}>
-            sound stop
-          </button>
-        ) : (
-          <button type="button" onClick={soundStart}>
-            sound start
-          </button>
-        )}
-      </div>
-      <div>
-        gain
-        <input
-          type="range"
-          min="0"
-          max="0.1"
-          step="0.002"
-          id="gain"
-          onChange={() => {
-            let htmlEle = document.getElementById("gain") as HTMLInputElement
-            let value: number = htmlEle.valueAsNumber
-            if (masterGainNode.current)
-              masterGainNode.current.gain.value = value
-          }}
-        ></input>
-      </div>
+    <div className="py-2">
+      {isPlaySound ? (
+        <button type="button" onClick={soundStop}>
+          <Volume2 className="pt-3" size={30} />
+        </button>
+      ) : (
+        <button type="button" onClick={soundStart}>
+          <VolumeX className="pt-3" size={30} />
+        </button>
+      )}
+      <input
+        className="inline-block mx-2 text-sm font-medium"
+        type="range"
+        min="0"
+        max="0.1"
+        step="0.002"
+        id="gain"
+        onChange={() => {
+          let htmlEle = document.getElementById("gain") as HTMLInputElement
+          let value: number = htmlEle.valueAsNumber
+          if (masterGainNode.current) masterGainNode.current.gain.value = value
+        }}
+      ></input>
     </div>
   )
 }

@@ -85,13 +85,37 @@ const SketchComponent = ({
   }
 
   return (
-    <Sketch
-      className={styles.sketch}
-      preload={preload}
-      setup={setup}
-      draw={draw}
-      windowResized={windowResized}
-    />
+    <div>
+      <Sketch
+        className={styles.sketch}
+        preload={preload}
+        setup={setup}
+        draw={draw}
+        windowResized={windowResized}
+      />
+      <p className="text-center">
+        {userCoefficient.map((e, idx) => (
+          <>
+            <span key={"a" + idx} className="">
+              a<sub>{idx + 1} </sub>
+            </span>
+            <span key={"sin" + idx} className="">
+              sin{idx + 1}
+            </span>
+            <span key={"theta" + idx} className="italic">
+              θ
+            </span>
+            {idx + 1 == userCoefficient.length ? (
+              <span></span>
+            ) : (
+              <span key={"plus" + idx} className="">
+                {" + "}
+              </span>
+            )}
+          </>
+        ))}
+      </p>
+    </div>
   )
 }
 

@@ -62,7 +62,7 @@ const Home: NextPage<Props> = ({ stages }) => {
 
             <Link href="/free">
               <a className="inline-block py-3 text-sm font-semibold text-center text-indigo-500 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
-                Play Simulation Mode
+                Play Simulator
               </a>
             </Link>
 
