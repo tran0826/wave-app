@@ -107,7 +107,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                     },
                   }}
                 >
-                  <a className="text-center text-red-500 hover:text-indigo-500 sm:text-2xl">
+                  <a className="inline-block py-2 px-4 text-sm font-bold text-center text-red-500 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
                     Show Result!
                   </a>
                 </Link>
@@ -146,18 +146,23 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               userCoefficient={userCoefficient}
               theta={theta}
             />
-            <p className="mb-4 font-semibold text-red-500 md:mb-6 md:text-lg xl:text-xl">
-              similarity: {waveSimilarity.current}
-            </p>
+            <div className="flex flex-row text-center">
+              <div className="basis-1/2 mb-4 font-semibold text-right text-black md:mb-6 md:text-lg xl:text-xl">
+                similarity:
+              </div>
+              <div className="basis-1/2 justify-start mb-4 font-bold text-left text-red-500 md:mb-6 md:text-lg xl:text-xl">
+                {waveSimilarity.current.toFixed(3)}
+              </div>
+            </div>
 
             <div className="overflow-y-auto h-32">
               <ul>
                 {userCoefficient.map((num, id) => (
                   <li key={id} className="flex flex-row">
-                    <div className="basis-2/12 pr-2 text-right">
+                    <div className="basis-3/12 pr-2 text-right">
                       a<sub>{id + 1}</sub>
                     </div>
-                    <div className="basis-8/12">
+                    <div className="basis-6/12">
                       <input
                         className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
                         type="range"
@@ -182,7 +187,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                         }}
                       ></input>
                     </div>
-                    <div className="basis-2/12 pl-2 text-left">
+                    <div className="basis-3/12 pl-2 text-left">
                       {"value:" + num}
                     </div>
                   </li>

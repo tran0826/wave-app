@@ -1,12 +1,6 @@
 import type { NextPage, GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
-import {
-  LineIcon,
-  LineShareButton,
-  TwitterIcon,
-  TwitterShareButton,
-} from "react-share"
 import Layout from "../components/layout"
 import { Stage } from "../lib/stage"
 
