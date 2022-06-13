@@ -116,10 +116,10 @@ const Free: NextPage = () => {
             <ul>
               {userCoefficient.map((num, id) => (
                 <li key={id} className="flex flex-row">
-                  <div className="basis-3/12 pr-2 text-right">
+                  <div className="basis-1/12 pr-2 text-right">
                     a<sub>{id + 1}</sub>
                   </div>
-                  <div className="basis-6/12">
+                  <div className="basis-7/12">
                     <input
                       className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
                       type="range"
@@ -140,7 +140,7 @@ const Free: NextPage = () => {
                       }}
                     ></input>
                   </div>
-                  <div className="basis-3/12 pl-2 text-left">
+                  <div className="basis-4/12 pl-2 text-left">
                     {"value:" + num}
                   </div>
                 </li>

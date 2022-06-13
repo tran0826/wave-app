@@ -107,7 +107,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                     },
                   }}
                 >
-                  <a className="inline-block py-2 px-4 text-sm font-bold text-center text-red-500 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
+                  <a className="inline-block py-2 px-3 text-sm font-bold text-center text-red-500 bg-gray-200 hover:bg-gray-300 rounded-lg outline-none focus-visible:ring ring-indigo-300 transition duration-100 md:text-base">
                     Show Result!
                   </a>
                 </Link>
@@ -128,13 +128,13 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               </span>
               <div className="inline-flex basis-2/5 justify-end rounded-md">
                 <button
-                  className="focus:z-10 p-2 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-l-lg border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
+                  className="focus:z-10 p-1 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-l-lg border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
                   onClick={moveWave}
                 >
                   move wave
                 </button>
                 <button
-                  className="focus:z-10 p-2 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-r-md border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
+                  className="focus:z-10 p-1 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-r-md border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
                   onClick={stopWave}
                 >
                   stop wave
@@ -159,10 +159,10 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               <ul>
                 {userCoefficient.map((num, id) => (
                   <li key={id} className="flex flex-row">
-                    <div className="basis-3/12 pr-2 text-right">
+                    <div className="basis-1/12 pr-2 text-right">
                       a<sub>{id + 1}</sub>
                     </div>
-                    <div className="basis-6/12">
+                    <div className="basis-7/12">
                       <input
                         className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
                         type="range"
@@ -187,7 +187,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                         }}
                       ></input>
                     </div>
-                    <div className="basis-3/12 pl-2 text-left">
+                    <div className="basis-4/12 pl-2 text-left">
                       {"value:" + num}
                     </div>
                   </li>
