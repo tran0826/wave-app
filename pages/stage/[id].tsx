@@ -46,7 +46,8 @@ const Stage: NextPage<Props> = ({ stageData }) => {
   const [userCoefficient, setUserCoefficient] = useState(
     Array(stageData.difficulty).fill(0) as number[],
   )
-  const [waveSimilarity, setWaveSimilarity] = useState(0)
+  //const [waveSimilarity, setWaveSimilarity] = useState(0)
+  const waveSimilarity = useRef<number>(0)
   const [theta, setTheta] = useState(0)
   const [startFlag, setStartFlag] = useState(false)
   const [startTime, setStartTime] = useState(0)
@@ -58,7 +59,9 @@ const Stage: NextPage<Props> = ({ stageData }) => {
     console.log("useEffect")
     setAnswerCoefficient(getWaveCoefficient(stageData.difficulty))
     const interval = setInterval(() => {
-      setNowTime(Date.now())
+      if (waveSimilarity.current > 10) {
+        setNowTime(Date.now())
+      }
     }, 100)
     return () => clearInterval(interval)
   }, [stageData.difficulty])
@@ -86,26 +89,69 @@ const Stage: NextPage<Props> = ({ stageData }) => {
         <title>stage {stageData.id}</title>
       </Head>
       <section className="flex flex-col items-center text-center">
-        <h1 className="pt-2 mb-8 font-bold text-black sm:text-5xl md:mb-12 md:text-5xl">
+        <h1 className="pt-2 mb-8 font-bold text-black sm:text-5xl md:mb-6 md:text-5xl">
           STAGE {stageData.id}
         </h1>
 
         {startFlag ? (
           <div className="w-4/5">
-            <WaveSound coefficient={userCoefficient} />
+            {waveSimilarity.current <= 10 ? (
+              <div className="h-8">
+                <Link
+                  as={`/result/${stageData.id}`}
+                  href={{
+                    pathname: `/result/${stageData.id}`,
+                    query: {
+                      time: Math.round((nowTime - startTime) / 100) / 10,
+                      userName: userName,
+                      uuid: uuidv4(),
+                    },
+                  }}
+                >
+                  <a className="text-center text-red-500 hover:text-indigo-500 sm:text-2xl">
+                    Show Result!
+                  </a>
+                </Link>
+              </div>
+            ) : (
+              <div className="h-8">
+                <p className="text-center sm:text-2xl">
+                  reduce the similarity to less than 10
+                </p>
+              </div>
+            )}
+            <div className="flex flex-row items-center">
+              <div className="basis-2/5">
+                <WaveSound coefficient={userCoefficient} />
+              </div>
+              <span className="basis-1/5 text-sm sm:text-xl">
+                {(Math.round((nowTime - startTime) / 100) / 10).toFixed(1)} sec
+              </span>
+              <div className="inline-flex basis-2/5 justify-end rounded-md">
+                <button
+                  className="focus:z-10 py-2 px-4 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-l-lg border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
+                  onClick={moveWave}
+                >
+                  move wave
+                </button>
+                <button
+                  className="focus:z-10 py-2 px-4 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-r-md border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
+                  onClick={stopWave}
+                >
+                  stop wave
+                </button>
+              </div>
+            </div>
             <SketchComponent
               answerCoefficient={answerCoefficient}
               userCoefficient={userCoefficient}
               theta={theta}
             />
-            <p>similarity: {waveSimilarity}</p>
-            <p>{Math.round((nowTime - startTime) / 100) / 10} sec</p>
+            <p className="mb-4 font-semibold text-red-500 md:mb-6 md:text-lg xl:text-xl">
+              similarity: {waveSimilarity.current}
+            </p>
 
-            <div>
-              <button onClick={moveWave}>start move</button>
-              <button onClick={stopWave}>stop move</button>
-            </div>
-            <div>
+            <div className="overflow-y-auto h-32">
               <ul>
                 {userCoefficient.map((num, id) => (
                   <li key={id}>
@@ -127,9 +173,13 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                           index == id ? value : ele,
                         )
                         setUserCoefficient(nxtCoefficient)
-                        setWaveSimilarity(
-                          calcWaveSimilarity(nxtCoefficient, answerCoefficient),
+                        waveSimilarity.current = calcWaveSimilarity(
+                          nxtCoefficient,
+                          answerCoefficient,
                         )
+                        //  setWaveSimilarity(
+                        //</li>  calcWaveSimilarity(nxtCoefficient, answerCoefficient),
+                        //)
                       }}
                     ></input>
                     {"value:" + num}
@@ -137,29 +187,6 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                 ))}
               </ul>
             </div>
-            {waveSimilarity <= 10 ? (
-              <div>
-                <Link
-                  as={`/result/${stageData.id}`}
-                  href={{
-                    pathname: `/result/${stageData.id}`,
-                    query: {
-                      time: Math.round((nowTime - startTime) / 100) / 10,
-                      userName: userName,
-                      uuid: uuidv4(),
-                    },
-                  }}
-                >
-                  <a>CLEAR!</a>
-                </Link>
-              </div>
-            ) : (
-              <div>
-                <p className="text-center">
-                  reduce the similarity to less than 10
-                </p>
-              </div>
-            )}
           </div>
         ) : (
           <div className="items-center text-center">
@@ -179,9 +206,13 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                 setStartFlag(true)
                 setNowTime(Date.now())
                 setStartTime(Date.now())
-                setWaveSimilarity(
-                  calcWaveSimilarity(userCoefficient, answerCoefficient),
+                waveSimilarity.current = calcWaveSimilarity(
+                  userCoefficient,
+                  answerCoefficient,
                 )
+                //                setWaveSimilarity(
+                //</div>                calcWaveSimilarity(userCoefficient, answerCoefficient),
+                //            )
                 let htmlEle = document.getElementById(
                   "userNameBox",
                 ) as HTMLInputElement

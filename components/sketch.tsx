@@ -94,11 +94,11 @@ const SketchComponent = ({
         windowResized={windowResized}
       />
 
-      <p className="text-center ">
+      <p className="overflow-y-auto px-2 h-12 text-center">
         {userCoefficient.map((e, idx) => (
           <>
             <span key={"a" + idx} className="">
-              a<sub>{idx + 1} </sub>sin{idx + 1}
+              a<sub>{idx + 1} </sub>sin{idx == 0 ? "" : idx + 1}
             </span>
             <span key={"theta" + idx} className="italic">
               θ
