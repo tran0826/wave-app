@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from "next"
 import DefaultErrorPage from "next/error"
 import Head from "next/head"
+import Link from "next/link"
 import {
   LineIcon,
   LineShareButton,
@@ -83,7 +84,7 @@ const Result: NextPage<Props> = ({ data, err }: Props) => {
             </p>
             <p className="mb-4 text-xl text-black md:mb-4">share your time</p>
           </div>
-          <div className="mb-12 md:mb-12">
+          <div className="mb-6 md:mb-6">
             <TwitterShareButton
               url="https://wave-app-nine.vercel.app/"
               title={
@@ -111,6 +112,12 @@ const Result: NextPage<Props> = ({ data, err }: Props) => {
               <LineIcon size={30} round={false} />
             </LineShareButton>
           </div>
+          <Link href="/">
+            <a className="mb-8 text-xl text-gray-500 hover:text-indigo-500 active:text-indigo-600 transition duration-100 md:mb-12">
+              return to the top
+            </a>
+          </Link>
+
           <h2 className="mb-6 text-4xl font-bold text-black md:mb-6">
             RANKING
           </h2>

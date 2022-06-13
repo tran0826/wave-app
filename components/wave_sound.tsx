@@ -88,7 +88,7 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
           </button>
         )}
         <input
-          className="inline-block mx-2 w-6/12 text-sm font-medium"
+          className="inline-block mx-2 w-full text-sm font-medium"
           type="range"
           min="0"
           max="0.1"
@@ -107,7 +107,7 @@ const WaveSound = ({ coefficient }: { coefficient: number[] }) => {
       <div className="flex flex-row">
         <Activity className="" size={20} />
         <input
-          className="inline-block mx-2 w-6/12 text-sm font-medium"
+          className="inline-block mx-2 w-full text-sm font-medium"
           type="range"
           min="110"
           max="880"

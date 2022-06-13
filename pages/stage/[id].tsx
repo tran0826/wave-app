@@ -46,7 +46,6 @@ const Stage: NextPage<Props> = ({ stageData }) => {
   const [userCoefficient, setUserCoefficient] = useState(
     Array(stageData.difficulty).fill(0) as number[],
   )
-  //const [waveSimilarity, setWaveSimilarity] = useState(0)
   const waveSimilarity = useRef<number>(0)
   const [theta, setTheta] = useState(0)
   const [startFlag, setStartFlag] = useState(false)
@@ -129,13 +128,13 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               </span>
               <div className="inline-flex basis-2/5 justify-end rounded-md">
                 <button
-                  className="focus:z-10 py-2 px-4 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-l-lg border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
+                  className="focus:z-10 p-2 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-l-lg border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
                   onClick={moveWave}
                 >
                   move wave
                 </button>
                 <button
-                  className="focus:z-10 py-2 px-4 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-r-md border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
+                  className="focus:z-10 p-2 text-sm font-medium text-gray-900 hover:text-blue-700 focus:text-blue-700 dark:text-white dark:hover:text-white dark:focus:text-white bg-white hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-r-md border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-blue-700 dark:focus:ring-blue-500"
                   onClick={stopWave}
                 >
                   stop wave
@@ -154,35 +153,38 @@ const Stage: NextPage<Props> = ({ stageData }) => {
             <div className="overflow-y-auto h-32">
               <ul>
                 {userCoefficient.map((num, id) => (
-                  <li key={id}>
-                    a<sub>{id + 1}</sub>
-                    <input
-                      className=""
-                      type="range"
-                      min="-1"
-                      max="1"
-                      step="0.01"
-                      id={"co" + id}
-                      value={userCoefficient[id]}
-                      onChange={() => {
-                        let htmlEle = document.getElementById(
-                          "co" + id,
-                        ) as HTMLInputElement
-                        let value: number = htmlEle.valueAsNumber
-                        let nxtCoefficient = userCoefficient.map((ele, index) =>
-                          index == id ? value : ele,
-                        )
-                        setUserCoefficient(nxtCoefficient)
-                        waveSimilarity.current = calcWaveSimilarity(
-                          nxtCoefficient,
-                          answerCoefficient,
-                        )
-                        //  setWaveSimilarity(
-                        //</li>  calcWaveSimilarity(nxtCoefficient, answerCoefficient),
-                        //)
-                      }}
-                    ></input>
-                    {"value:" + num}
+                  <li key={id} className="flex flex-row">
+                    <div className="basis-2/12 pr-2 text-right">
+                      a<sub>{id + 1}</sub>
+                    </div>
+                    <div className="basis-8/12">
+                      <input
+                        className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                        type="range"
+                        min="-1"
+                        max="1"
+                        step="0.01"
+                        id={"co" + id}
+                        value={userCoefficient[id]}
+                        onChange={() => {
+                          let htmlEle = document.getElementById(
+                            "co" + id,
+                          ) as HTMLInputElement
+                          let value: number = htmlEle.valueAsNumber
+                          let nxtCoefficient = userCoefficient.map(
+                            (ele, index) => (index == id ? value : ele),
+                          )
+                          setUserCoefficient(nxtCoefficient)
+                          waveSimilarity.current = calcWaveSimilarity(
+                            nxtCoefficient,
+                            answerCoefficient,
+                          )
+                        }}
+                      ></input>
+                    </div>
+                    <div className="basis-2/12 pl-2 text-left">
+                      {"value:" + num}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -210,9 +212,6 @@ const Stage: NextPage<Props> = ({ stageData }) => {
                   userCoefficient,
                   answerCoefficient,
                 )
-                //                setWaveSimilarity(
-                //</div>                calcWaveSimilarity(userCoefficient, answerCoefficient),
-                //            )
                 let htmlEle = document.getElementById(
                   "userNameBox",
                 ) as HTMLInputElement
