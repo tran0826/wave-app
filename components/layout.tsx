@@ -7,6 +7,7 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from "react-share"
+import Adsense from "./adsense"
 
 const name = "tran0826"
 export const siteTitle = "Wave Composite Game"
@@ -87,6 +88,7 @@ export default function Layout({
             .
           </div>
         </footer>
+        <Adsense />
       </div>
     </div>
   )

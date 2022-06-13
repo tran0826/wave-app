@@ -1,6 +1,7 @@
 import type { NextPage, GetStaticProps } from "next"
 import Head from "next/head"
 import Link from "next/link"
+import Adsense from "../components/adsense"
 import Layout from "../components/layout"
 import { Stage } from "../lib/stage"
 
@@ -79,6 +80,7 @@ const Home: NextPage<Props> = ({ stages }) => {
           </div>
         </div>
       </section>
+      <Adsense />
     </Layout>
   )
 }

@@ -1,5 +1,6 @@
 import { NextPage } from "next"
 import { useCallback, useRef, useState } from "react"
+import Adsense from "../components/adsense"
 import Layout from "../components/layout"
 import SketchComponent from "../components/sketch"
 import WaveSound from "../components/wave_sound"

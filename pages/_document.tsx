@@ -8,7 +8,11 @@ class MyDocument extends Document {
       <Html lang={"ja"} dir={"ltr"}>
         <Head>
           {/* ... その他のコード */}
-
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6560339622567682"
+            crossOrigin="anonymous"
+          ></script>
           {/* Google Analytics */}
           {GA_ID && (
             <>
