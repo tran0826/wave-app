@@ -141,7 +141,9 @@ const Free: NextPage = () => {
                       }}
                     ></input>
                   </div>
-                  <div className="basis-2/12 pl-2 text-left">{num}</div>
+                  <div className="basis-2/12 pl-2 text-left">
+                    {num.toFixed(2)}
+                  </div>
                 </li>
               ))}
             </ul>
