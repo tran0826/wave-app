@@ -113,7 +113,7 @@ const Free: NextPage = () => {
               set square wave
             </button>
           </div>
-          <div className="overflow-y-scroll h-32">
+          <div className="overflow-y-scroll h-64">
             <ul>
               {userCoefficient.map((num, id) => (
                 <li key={id} className="flex flex-row">

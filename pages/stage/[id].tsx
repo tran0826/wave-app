@@ -155,7 +155,7 @@ const Stage: NextPage<Props> = ({ stageData }) => {
               </div>
             </div>
 
-            <div className="overflow-y-auto h-32">
+            <div className="overflow-y-auto h-64">
               <ul>
                 {userCoefficient.map((num, id) => (
                   <li key={id} className="flex flex-row">
