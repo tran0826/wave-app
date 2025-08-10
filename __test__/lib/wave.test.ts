@@ -1,5 +1,9 @@
 import { Point } from "../../lib/point"
-import { calcWaveSimilarity, getWavePoints } from "../../lib/wave"
+import {
+  calcWaveSimilarity,
+  getWaveCoefficient,
+  getWavePoints,
+} from "../../lib/wave"
 
 describe("test getWavePoints", () => {
   it("wave return number of Point equal width ", () => {
@@ -38,5 +42,18 @@ describe("test calcWaveSimilarity", () => {
     const coefficient2: number[] = [1.2, 2, 3.4]
     const result = calcWaveSimilarity(coefficient1, coefficient2)
     expect(result).toBe(0)
+  })
+})
+
+describe("test getWaveCoefficient", () => {
+  it("returns coefficients within -1 and 1 and correct length", () => {
+    const n = 10
+    const coefficients = getWaveCoefficient(n)
+
+    expect(coefficients).toHaveLength(n)
+    coefficients.forEach((c) => {
+      expect(c).toBeGreaterThanOrEqual(-1)
+      expect(c).toBeLessThanOrEqual(1)
+    })
   })
 })
